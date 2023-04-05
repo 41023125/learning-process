@@ -141,21 +141,20 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">adb << <a href='adb.html'>Previous</a> <a href='測試端口是否正常連接.html'>Next</a> >> 測試端口是否正常連接<br /><h1>列出設備上的應用程式</h1>
-<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">from ppadb.client import Client
- 
-# 建立 ADB 連線
-adb = Client(host='127.0.0.1', port=5037)
-device = adb.device('127.0.0.1:62001')
- 
-# 取得所有已安裝應用程式列表
-result = device.shell('pm list packages')
-packages = [line.strip()[8:] for line in result.split('\n') if line.strip()]
- 
-# 列出所有應用程式名稱
-for package in packages:
-    print(package)</pre>
-<br />adb << <a href='adb.html'>Previous</a> <a href='測試端口是否正常連接.html'>Next</a> >> 測試端口是否正常連接</div>
+    <div id="tipue_search_content">截圖 << <a href='截圖.html'>Previous</a> <a href='tel2023.html'>Next</a> >> tel2023<br /><h1>點擊</h1>
+<div>
+<div>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import subprocess
+
+
+def click(x, y):
+    subprocess.run(['adb', 'shell', f'input tap {x} {y}'])
+
+
+click(500, 500)  # 點擊座標 (500, 500)
+</pre>
+</div>
+</div><br />截圖 << <a href='截圖.html'>Previous</a> <a href='tel2023.html'>Next</a> >> tel2023</div>
         
     <!-- footer -->
       <div class="container">

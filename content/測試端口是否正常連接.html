@@ -141,21 +141,29 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">adb << <a href='adb.html'>Previous</a> <a href='測試端口是否正常連接.html'>Next</a> >> 測試端口是否正常連接<br /><h1>列出設備上的應用程式</h1>
-<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">from ppadb.client import Client
- 
-# 建立 ADB 連線
-adb = Client(host='127.0.0.1', port=5037)
-device = adb.device('127.0.0.1:62001')
- 
-# 取得所有已安裝應用程式列表
-result = device.shell('pm list packages')
-packages = [line.strip()[8:] for line in result.split('\n') if line.strip()]
- 
-# 列出所有應用程式名稱
-for package in packages:
-    print(package)</pre>
-<br />adb << <a href='adb.html'>Previous</a> <a href='測試端口是否正常連接.html'>Next</a> >> 測試端口是否正常連接</div>
+    <div id="tipue_search_content">列出設備上的應用程式 << <a href='列出設備上的應用程式.html'>Previous</a> <a href='取得目前應用程式的包名稱和主活動.html'>Next</a> >> 取得目前應用程式的包名稱和主活動<br /><h1>測試端口是否正常連接</h1>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import socket
+
+# 設置主機地址和端口號
+host = '127.0.0.1'
+port = 62001
+
+# 創建套接字對象
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# 嘗試連接主機和端口號
+result = sock.connect_ex((host, port))
+
+# 檢查連接結果
+if result == 0:
+print("端口連接成功！")
+else:
+print("端口連接失敗。")
+
+# 關閉套接字對象
+sock.close()</pre>
+<p><br/><br/></p>
+<br />列出設備上的應用程式 << <a href='列出設備上的應用程式.html'>Previous</a> <a href='取得目前應用程式的包名稱和主活動.html'>Next</a> >> 取得目前應用程式的包名稱和主活動</div>
         
     <!-- footer -->
       <div class="container">

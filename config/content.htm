@@ -32,7 +32,8 @@
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">adb shell am force-stop com.percent.royaldice</pre>
 <p><br/><br/></p>
 <p>關閉程式</p>
-<p><span></span></p><h2>列出設備上的應用程式</h2>
+<p><span></span></p>
+<h2>列出設備上的應用程式</h2>
 <pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">from ppadb.client import Client
  
 # 建立 ADB 連線
@@ -46,6 +47,28 @@ packages = [line.strip()[8:] for line in result.split('\n') if line.strip()]
 # 列出所有應用程式名稱
 for package in packages:
     print(package)</pre>
+<h2>測試端口是否正常連接</h2>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import socket
+
+# 設置主機地址和端口號
+host = '127.0.0.1'
+port = 62001
+
+# 創建套接字對象
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# 嘗試連接主機和端口號
+result = sock.connect_ex((host, port))
+
+# 檢查連接結果
+if result == 0:
+print("端口連接成功！")
+else:
+print("端口連接失敗。")
+
+# 關閉套接字對象
+sock.close()</pre>
+<p><br/><br/></p>
 <h2>取得目前應用程式的包名稱和主活動</h2>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from ppadb.client import Client
 
@@ -74,9 +97,31 @@ activity_name = package_activity[1].strip()
 </div>
 </div>
 </div>
-<p><br/><br/></p><h1>tel2023</h1>
+<p><br/><br/></p>
+<h2>截圖</h2>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import subprocess
+
+subprocess.run("adb shell screencap -p /sdcard/screenshot.png")
+subprocess.run("adb pull /sdcard/screenshot.png .")
+subprocess.run("adb shell rm /sdcard/screenshot.png")</pre>
+<p></p>
+<h2>點擊</h2>
+<div>
+<div>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import subprocess
+
+
+def click(x, y):
+    subprocess.run(['adb', 'shell', f'input tap {x} {y}'])
+
+
+click(500, 500)  # 點擊座標 (500, 500)
+</pre>
+</div>
+</div><h1>tel2023</h1>
 <p>labview程式:</p>
-<p></p><h2>直線校正</h2>
+<p></p>
+<h2>直線校正</h2>
 <p><a href="https://drive.google.com/file/d/1Jz0SCrmmJfHok8FH_F0pwIMWqxyfNwms/view?usp=share_link/">直線校正.zip</a></p>
 <p><span></span></p>
 <p>使用python編寫</p>
@@ -130,7 +175,8 @@ root = tk.Tk()
 app = Application(master=root)
 app.mainloop()
 </pre>
-<p><br/><br/></p><h1>other</h1>
+<p><br/><br/></p>
+<h1>other</h1>
 <p>放置其他零散物品</p>
 <h2>建立倉儲</h2>
 <p>進入github選擇new repository.png</p>
@@ -146,9 +192,12 @@ app.mainloop()
 <p>開啟cmd</p>
 <p>輸入git clone (複製的網址)</p>
 <p>(需先安裝好<a href="https://git-scm.com/">git</a>)</p>
-<p>倉儲的內容便會下載下來</p><h2>設定Personal access tokens(碼牌)</h2>
-<p>打開github帳號點選右上頭像並點選Settings<br/>點選Developer settings<br/>點選Personal access tokens<br/>點選<a href="https://github.com/settings/tokens/new">Generate new token</a><br/>Note (任意)<br/>打勾repo(第一個)<br/>點選最下面的Generate token<br/>複製產生出來的token<br/>打開可攜系統<br/>打開要設Personal access tokens的資料夾<br/>點開.git(要開隱藏項目才看的到)<br/>將裡面的congif拉到SciTE(球球)<br/>將複製的字串貼在github.com的前面再加上@並存檔(CTRL+S)<br/>這樣Personal access tokens就設定完成</p><h2>可攜</h2>
-<p><a href="https://drive.google.com/file/d/1KlC7rREf4laOPVHQsBzcuEokXiFBW9c7/view?usp=share_link">可攜模板.zip</a></p><h2>key.py</h2>
+<p>倉儲的內容便會下載下來</p>
+<h2>設定Personal access tokens(碼牌)</h2>
+<p>打開github帳號點選右上頭像並點選Settings<br/>點選Developer settings<br/>點選Personal access tokens<br/>點選<a href="https://github.com/settings/tokens/new">Generate new token</a><br/>Note (任意)<br/>打勾repo(第一個)<br/>點選最下面的Generate token<br/>複製產生出來的token<br/>打開可攜系統<br/>打開要設Personal access tokens的資料夾<br/>點開.git(要開隱藏項目才看的到)<br/>將裡面的congif拉到SciTE(球球)<br/>將複製的字串貼在github.com的前面再加上@並存檔(CTRL+S)<br/>這樣Personal access tokens就設定完成</p>
+<h2>可攜</h2>
+<p><a href="https://drive.google.com/file/d/1KlC7rREf4laOPVHQsBzcuEokXiFBW9c7/view?usp=share_link">可攜模板.zip</a></p>
+<h2>key.py</h2>
 <p><a href="/downloads/ket.py/key.py">key.py</a></p>
 <p><a href="/downloads/ket.py/key.bat">key.bat</a></p>
 <p>將上方檔案放入倉儲內部</p>
@@ -156,18 +205,20 @@ app.mainloop()
 <p>將txt位置放入key.py裡面</p>
 <p>需要時只需要輸入key便可以快速輸入碼牌</p>
 <p><img alt="" height="47" src="/images/key.py/key.png" width="422"/></p>
-<p></p><h1>question</h1>
+<p></p>
+<h1>question</h1>
 <p>所遇到的問題與解決方法</p>
-<br/>上傳檔案太大<img alt="" height="186" src="/images/遇到問題/檔案太大.png" width="1315"/><h2>上傳檔案太大</h2>
+<p><br/>上傳檔案太大<img alt="" height="186" src="/images/遇到問題/檔案太大.png" width="1315"/></p>
+<h2>上傳檔案太大</h2>
 <p><img alt="" height="79" src="/images/遇到問題/檔案太大.png" width="559"/></p>
 <p>取消commit</p>
 <p>刪除過大的問題的文件</p>
 <p>改用雲端硬碟等方式</p>
-<p>重新commit</p><h2>取消commit</h2>
+<p>重新commit</p>
+<h2>取消commit</h2>
 <p><span><a href="https://www.php.cn/tool/git/507281.html#:~:text=%E5%8F%96%E6%B6%88%20commit%20%E6%93%8D%E4%BD%9C%20%E5%A6%82%E6%9E%9C%E6%88%91%E4%BB%AC%E5%B7%B2%E7%BB%8F%E6%89%A7%E8%A1%8C%E4%BA%86%20commit%20%E6%93%8D%E4%BD%9C%EF%BC%8C%E4%BD%86%E5%90%8E%E6%9D%A5%E5%8F%91%E7%8E%B0%E6%8F%90%E4%BA%A4%E4%BF%A1%E6%81%AF%E6%9C%89%E9%94%99%E8%AF%AF%E3%80%81%E6%88%96%E8%80%85%E6%8F%90%E4%BA%A4%E7%9A%84%E5%86%85%E5%AE%B9%E6%9C%89%E8%AF%AF%EF%BC%8C%E9%9C%80%E8%A6%81%E9%87%8D%E6%96%B0%E4%BF%AE%E6%94%B9%E4%B9%8B%E5%90%8E%E5%86%8D%E6%AC%A1%E6%8F%90%E4%BA%A4%EF%BC%8C%E8%BF%99%E6%97%B6%E6%88%91%E4%BB%AC%E5%B0%B1%E9%9C%80%E8%A6%81%E5%8F%96%E6%B6%88%E4%B8%8A%E4%B8%80%E6%AC%A1%20commit%20%E6%93%8D%E4%BD%9C%E3%80%82,commit%20%E6%93%8D%E4%BD%9C%E4%B8%80%E8%88%AC%E6%9C%89%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%EF%BC%9A%E4%BD%BF%E7%94%A8%20git%20revert%20%E5%91%BD%E4%BB%A4%E6%88%96%E4%BD%BF%E7%94%A8%20git%20reset%20%E5%91%BD%E4%BB%A4%E3%80%82">git中如何取消 commit 操作</a></span></p>
 <pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">git reset --soft HEAD^</pre>
 <p><br/><br/></p>
 <p><span>這個命令將撤銷最後一個提交，但保留更改。如果您需要撤銷更多的提交，可以使用</span>HEAD~n</p>
 <p><code class="inline-flex max-w-full overflow-hidden rounded-sm cursor-pointer"></code><span>其中</span>n<code class="inline-flex max-w-full overflow-hidden rounded-sm cursor-pointer"></code><span>是要撤銷的提交數量。例如，如果您要撤銷最後兩個提交，可以使用以下命令：</span></p>
 <pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">git reset --soft HEAD~2</pre>
-<p></p>
