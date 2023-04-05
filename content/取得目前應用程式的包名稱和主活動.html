@@ -141,15 +141,35 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">可攜 << <a href='可攜.html'>Previous</a> <a href='question.html'>Next</a> >> question<br /><h1>key.py</h1>
-<p><a href="./../downloads/ket.py/key.py">key.py</a></p>
-<p><a href="./../downloads/ket.py/key.bat">key.bat</a></p>
-<p>將上方檔案放入倉儲內部</p>
-<p>並將碼牌放入特定txt檔後</p>
-<p>將txt位置放入key.py裡面</p>
-<p>需要時只需要輸入key便可以快速輸入碼牌</p>
-<p><img alt="" height="47" src="./../images/key.py/key.png" width="422"/></p>
-<p></p><br />可攜 << <a href='可攜.html'>Previous</a> <a href='question.html'>Next</a> >> question</div>
+    <div id="tipue_search_content">列出設備上的應用程式 << <a href='列出設備上的應用程式.html'>Previous</a> <a href='tel2023.html'>Next</a> >> tel2023<br /><h1>取得目前應用程式的包名稱和主活動</h1>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from ppadb.client import Client
+
+# 建立 ADB 連線
+adb = Client(host='127.0.0.1', port=5037)
+device = adb.device('127.0.0.1:62001')
+
+# 查詢目前應用程式的包名稱和主活動
+output = device.shell('dumpsys window windows | grep -E "mCurrentFocus"')
+package_activity = output.split(' ')[-1].split('/')
+package_name = package_activity[0]
+activity_name = package_activity[1].strip()
+
+# 開啟應用程式
+#device.shell(f"am start -n {package_name}/{activity_name}")</pre>
+<p><br/>輸出結果範例:</p>
+<p>com.percent.royaldice<br/>com.google.firebase.MessagingUnityPlayerActivity}</p>
+<p>分別帶入後變成</p>
+<div>
+<div><span>package_name</span><span> = </span><span>'com.percent.royaldice'</span></div>
+<div><span>activity_name</span><span> = </span><span>'com.google.firebase.MessagingUnityPlayerActivity'</span></div>
+<div>便能利用
+<div>
+<div><span>device</span><span>.shell(</span><span>f</span><span>"am start -n </span><span>{</span><span>package_name</span><span>}</span><span>/</span><span>{</span><span>activity_name</span><span>}</span><span>"</span><span>)</span></div>
+<div><span>開啟想要開啟的程式</span></div>
+</div>
+</div>
+</div>
+<p><br/><br/></p><br />列出設備上的應用程式 << <a href='列出設備上的應用程式.html'>Previous</a> <a href='tel2023.html'>Next</a> >> tel2023</div>
         
     <!-- footer -->
       <div class="container">

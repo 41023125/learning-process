@@ -130,7 +130,7 @@ img.add_border {
                             <li><a href="./../blog/index.html">blog</a></li>
                         </ul>
                       </li>
-                     <li><a href='About.html'>About</a><li><a href='course.html'>course</a><li class='has-children'><a href='web page.html'>web page</a><ul class='dropdown'><li><a href='模板.html'>模板</a></li></ul><li><a href='game.html'>game</a><li><a href='adb.html'>adb</a><li class='has-children'><a href='tel2023.html'>tel2023</a><ul class='dropdown'><li><a href='直線校正.html'>直線校正</a></li></ul><li class='has-children'><a href='other.html'>other</a><ul class='dropdown'><li><a href='建立倉儲.html'>建立倉儲</a><li><a href='設定Personal access tokens(碼牌).html'>設定Personal access tokens(碼牌)</a><li><a href='可攜.html'>可攜</a><li><a href='key.py.html'>key.py</a></li></ul><li class='has-children'><a href='question.html'>question</a><ul class='dropdown'><li><a href='上傳檔案太大.html'>上傳檔案太大</a><li><a href='取消commit.html'>取消commit</a></li>
+                     <li><a href='About.html'>About</a><li><a href='course.html'>course</a><li class='has-children'><a href='web page.html'>web page</a><ul class='dropdown'><li><a href='模板.html'>模板</a></li></ul><li><a href='game.html'>game</a><li class='has-children'><a href='adb.html'>adb</a><ul class='dropdown'><li><a href='列出設備上的應用程式.html'>列出設備上的應用程式</a><li><a href='取得目前應用程式的包名稱和主活動.html'>取得目前應用程式的包名稱和主活動</a></li></ul><li class='has-children'><a href='tel2023.html'>tel2023</a><ul class='dropdown'><li><a href='直線校正.html'>直線校正</a></li></ul><li class='has-children'><a href='other.html'>other</a><ul class='dropdown'><li><a href='建立倉儲.html'>建立倉儲</a><li><a href='設定Personal access tokens(碼牌).html'>設定Personal access tokens(碼牌)</a><li><a href='可攜.html'>可攜</a><li><a href='key.py.html'>key.py</a></li></ul><li class='has-children'><a href='question.html'>question</a><ul class='dropdown'><li><a href='上傳檔案太大.html'>上傳檔案太大</a><li><a href='取消commit.html'>取消commit</a></li>
                       </ul>
                 </nav>
               </div>
@@ -141,9 +141,26 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">game << <a href='game.html'>Previous</a> <a href='tel2023.html'>Next</a> >> tel2023<br /><h1>adb</h1>
+    <div id="tipue_search_content">game << <a href='game.html'>Previous</a> <a href='列出設備上的應用程式.html'>Next</a> >> 列出設備上的應用程式<br /><h1>adb</h1>
 <p><a href="https://drive.google.com/file/d/1Jz0SCrmmJfHok8FH_F0pwIMWqxyfNwms/view?usp=share_link/"></a></p>
-<p>學習利用python控制手機與模擬器</p><br />game << <a href='game.html'>Previous</a> <a href='tel2023.html'>Next</a> >> tel2023</div>
+<p>學習利用python控制手機與模擬器</p>
+<p><a href="https://hi-upchen.medium.com/%E5%A6%82%E4%BD%95%E5%9C%A8-win10-%E5%AE%89%E8%A3%9D-android-adb%E5%B7%A5%E5%85%B7-8546cb0b81ce">如何在 WIN10 安裝 Android ADB工具</a></p>
+<p><a href="https://hi-upchen.medium.com/%E5%A6%82%E4%BD%95%E8%AE%93-nox-%E5%A4%9C%E7%A5%9E%E6%A8%A1%E6%93%AC%E5%99%A8%E6%94%AF%E6%8F%B4-adb-3b10b2764967">如何讓 NOX 夜神模擬器支援 ADB</a></p>
+<p><a href="https://shengyu7697.github.io/android-adb/">Android adb 基本用法教學</a></p>
+<p><span>可以使用</span></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">adb shell pm list packages | findstr dice
+</pre>
+<p><span><br/></span><span>指令來查看當前顯示的應用程式的相關資訊，其中 mCurrentFocus 顯示目前的視窗和活動的應用程式包名和類名，mFocusedApp 顯示當前焦點的應用程式包名和進程 ID。可以在模擬器或設備上執行此指令，以獲得目標應用程式的包名和主活動。</span></p>
+<p><span>假設輸出了package:com.percent.royaldice</span></p>
+<p><span>可以使用</span></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">adb shell monkey -p com.percent.royaldice -c android.intent.category.LAUNCHER 1</pre>
+<p><span><br/><br/></span></p>
+<p><span>打開程式</span></p>
+<p>使用</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">adb shell am force-stop com.percent.royaldice</pre>
+<p><br/><br/></p>
+<p>關閉程式</p>
+<p><span></span></p><br />game << <a href='game.html'>Previous</a> <a href='列出設備上的應用程式.html'>Next</a> >> 列出設備上的應用程式</div>
         
     <!-- footer -->
       <div class="container">

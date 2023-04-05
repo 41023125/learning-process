@@ -15,7 +15,66 @@
 <p>學習用python製作遊戲</p>
 <h1>adb</h1>
 <p><a href="https://drive.google.com/file/d/1Jz0SCrmmJfHok8FH_F0pwIMWqxyfNwms/view?usp=share_link/"></a></p>
-<p>學習利用python控制手機與模擬器</p><h1>tel2023</h1>
+<p>學習利用python控制手機與模擬器</p>
+<p><a href="https://hi-upchen.medium.com/%E5%A6%82%E4%BD%95%E5%9C%A8-win10-%E5%AE%89%E8%A3%9D-android-adb%E5%B7%A5%E5%85%B7-8546cb0b81ce">如何在 WIN10 安裝 Android ADB工具</a></p>
+<p><a href="https://hi-upchen.medium.com/%E5%A6%82%E4%BD%95%E8%AE%93-nox-%E5%A4%9C%E7%A5%9E%E6%A8%A1%E6%93%AC%E5%99%A8%E6%94%AF%E6%8F%B4-adb-3b10b2764967">如何讓 NOX 夜神模擬器支援 ADB</a></p>
+<p><a href="https://shengyu7697.github.io/android-adb/">Android adb 基本用法教學</a></p>
+<p><span>可以使用</span></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">adb shell pm list packages | findstr dice
+</pre>
+<p><span><br/></span><span>指令來查看當前顯示的應用程式的相關資訊，其中 mCurrentFocus 顯示目前的視窗和活動的應用程式包名和類名，mFocusedApp 顯示當前焦點的應用程式包名和進程 ID。可以在模擬器或設備上執行此指令，以獲得目標應用程式的包名和主活動。</span></p>
+<p><span>假設輸出了package:com.percent.royaldice</span></p>
+<p><span>可以使用</span></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">adb shell monkey -p com.percent.royaldice -c android.intent.category.LAUNCHER 1</pre>
+<p><span><br/><br/></span></p>
+<p><span>打開程式</span></p>
+<p>使用</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">adb shell am force-stop com.percent.royaldice</pre>
+<p><br/><br/></p>
+<p>關閉程式</p>
+<p><span></span></p><h2>列出設備上的應用程式</h2>
+<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">from ppadb.client import Client
+ 
+# 建立 ADB 連線
+adb = Client(host='127.0.0.1', port=5037)
+device = adb.device('127.0.0.1:62001')
+ 
+# 取得所有已安裝應用程式列表
+result = device.shell('pm list packages')
+packages = [line.strip()[8:] for line in result.split('\n') if line.strip()]
+ 
+# 列出所有應用程式名稱
+for package in packages:
+    print(package)</pre>
+<h2>取得目前應用程式的包名稱和主活動</h2>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from ppadb.client import Client
+
+# 建立 ADB 連線
+adb = Client(host='127.0.0.1', port=5037)
+device = adb.device('127.0.0.1:62001')
+
+# 查詢目前應用程式的包名稱和主活動
+output = device.shell('dumpsys window windows | grep -E "mCurrentFocus"')
+package_activity = output.split(' ')[-1].split('/')
+package_name = package_activity[0]
+activity_name = package_activity[1].strip()
+
+# 開啟應用程式
+#device.shell(f"am start -n {package_name}/{activity_name}")</pre>
+<p><br/>輸出結果範例:</p>
+<p>com.percent.royaldice<br/>com.google.firebase.MessagingUnityPlayerActivity}</p>
+<p>分別帶入後變成</p>
+<div>
+<div><span>package_name</span><span> = </span><span>'com.percent.royaldice'</span></div>
+<div><span>activity_name</span><span> = </span><span>'com.google.firebase.MessagingUnityPlayerActivity'</span></div>
+<div>便能利用
+<div>
+<div><span>device</span><span>.shell(</span><span>f</span><span>"am start -n </span><span>{</span><span>package_name</span><span>}</span><span>/</span><span>{</span><span>activity_name</span><span>}</span><span>"</span><span>)</span></div>
+<div><span>開啟想要開啟的程式</span></div>
+</div>
+</div>
+</div>
+<p><br/><br/></p><h1>tel2023</h1>
 <p>labview程式:</p>
 <p></p><h2>直線校正</h2>
 <p><a href="https://drive.google.com/file/d/1Jz0SCrmmJfHok8FH_F0pwIMWqxyfNwms/view?usp=share_link/">直線校正.zip</a></p>
