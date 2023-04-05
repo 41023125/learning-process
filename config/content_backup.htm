@@ -2,14 +2,106 @@
 <p>這裡將放置學習python的所有過程</p>
 <p>以便將來回憶與查詢</p>
 <p>網站網址:<a href="https://41023125.github.io/learning-process/content/index.html/">https://41023125.github.io/learning-process/content/index.html/</a></p>
-<p></p><h1>course</h1>
+<p></p>
+<h1>course</h1>
 <p>這裡放置上課學的過程與知識</p>
 <h1>web page</h1>
 <p><span>這裡放置</span>所學編寫網頁之知識</p>
 <p></p>
 <h2>模板</h2>
 <p>所使用模板</p>
-<p><a href="/downloads/cmsimde">cmsimde</a></p><h1>game</h1>
+<p><a href="/downloads/cmsimde.zip">cmsimde.zip</a></p>
+<h1>game</h1>
 <p>學習用python製作遊戲</p>
 <h1>adb</h1>
 <p>學習利用python控制手機與模擬器</p>
+<h1>tel2023</h1>
+<p>labview程式:</p>
+<p><a href="/downloads/labview程式.zip">labview程式.zip</a></p>
+<h2>直線校正</h2>
+<p><a href="/downloads/直線校正.zip">直線校正.zip</a><br/><span></span></p>
+<p>使用python編寫</p>
+<p>下方為程式碼</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import tkinter as tk
+
+
+class Application(tk.Frame):
+    def __init__(self, master=None):
+        super().__init__(master)
+        self.master = master
+        self.pack()
+        self.create_widgets()
+
+    def create_widgets(self):
+        self.input2_label = tk.Label(self, text="實際距離:")
+        self.input2_label.pack()
+        self.input2 = tk.Entry(self)
+        self.input2.pack()
+
+        self.input3_label = tk.Label(self, text="當前輪徑:")
+        self.input3_label.pack()
+        self.input3 = tk.Entry(self)
+        self.input3.pack()
+
+        self.submit_button = tk.Button(
+            self, text="計算", command=self.show_output)
+        self.submit_button.pack()
+
+        self.output_label = tk.Label(self, text="輪徑:")
+        self.output_label.pack()
+        self.output = tk.Label(self, text="")
+        self.output.pack()
+
+        self.quit_button = tk.Button(
+            self, text="Quit", command=self.master.quit)
+        self.quit_button.pack()
+
+    def show_output(self):
+        input2_value = self.input2.get()
+        input3_value = self.input3.get()
+
+        # 在這裡加上你的處理邏輯，將結果顯示在output的Label中
+        input2_value = float(self.input2.get())
+        input3_value = float(self.input3.get())
+        output_value = (input3_value * input2_value) / 1000
+        self.output.config(text=output_value)
+
+
+root = tk.Tk()
+app = Application(master=root)
+app.mainloop()
+</pre>
+<p><br/><br/></p><h1>other</h1>
+<p>放置其他零散物品</p>
+<h2>建立倉儲</h2>
+<p>進入github選擇new repository.png</p>
+<p><img alt="" height="167" src="/images/建立倉儲/new repository.png" width="278"/></p>
+<p>填寫要建立的倉儲名稱</p>
+<p>並勾選<span>Add a README file後</span></p>
+<p>點選create repository進行建立</p>
+<p><img alt="" height="260" src="/images/建立倉儲/name.png" width="290"/></p>
+<p></p>
+<p>進入建立的倉儲</p>
+<p>並點擊code選擇HTTPS or SSH複製連結</p>
+<p><img alt="" height="297" src="/images/建立倉儲/code.png" width="308"/></p>
+<p>開啟cmd</p>
+<p>輸入git clone (複製的網址)</p>
+<p>(需先安裝好<a href="https://git-scm.com/">git</a>)</p>
+<p>倉儲的內容便會下載下來</p><h2>設定Personal access tokens(碼牌)</h2>
+<p>打開github帳號點選右上頭像並點選Settings<br/>點選Developer settings<br/>點選Personal access tokens<br/>點選<a href="https://github.com/settings/tokens/new">Generate new token</a><br/>Note (任意)<br/>打勾repo(第一個)<br/>點選最下面的Generate token<br/>複製產生出來的token<br/>打開可攜系統<br/>打開要設Personal access tokens的資料夾<br/>點開.git(要開隱藏項目才看的到)<br/>將裡面的congif拉到SciTE(球球)<br/>將複製的字串貼在github.com的前面再加上@並存檔(CTRL+S)<br/>這樣Personal access tokens就設定完成</p><h2>可攜</h2>
+<p><a href="/downloads/portable_python_3.10.6.7z">portable_python_3.10.6.7z</a></p><h2>key.py</h2>
+<h1>question</h1>
+<p>所遇到的問題與解決方法</p>
+<br/>上傳檔案太大<img alt="" height="186" src="/images/遇到問題/檔案太大.png" width="1315"/><h2>上傳檔案太大</h2>
+<p><img alt="" height="79" src="/images/遇到問題/檔案太大.png" width="559"/></p>
+<p>取消commit</p>
+<p>刪除過大的問題的文件</p>
+<p>重新commit</p>
+<h2><span>取消commit</span></h2>
+<p><span><a href="https://www.php.cn/tool/git/507281.html#:~:text=%E5%8F%96%E6%B6%88%20commit%20%E6%93%8D%E4%BD%9C%20%E5%A6%82%E6%9E%9C%E6%88%91%E4%BB%AC%E5%B7%B2%E7%BB%8F%E6%89%A7%E8%A1%8C%E4%BA%86%20commit%20%E6%93%8D%E4%BD%9C%EF%BC%8C%E4%BD%86%E5%90%8E%E6%9D%A5%E5%8F%91%E7%8E%B0%E6%8F%90%E4%BA%A4%E4%BF%A1%E6%81%AF%E6%9C%89%E9%94%99%E8%AF%AF%E3%80%81%E6%88%96%E8%80%85%E6%8F%90%E4%BA%A4%E7%9A%84%E5%86%85%E5%AE%B9%E6%9C%89%E8%AF%AF%EF%BC%8C%E9%9C%80%E8%A6%81%E9%87%8D%E6%96%B0%E4%BF%AE%E6%94%B9%E4%B9%8B%E5%90%8E%E5%86%8D%E6%AC%A1%E6%8F%90%E4%BA%A4%EF%BC%8C%E8%BF%99%E6%97%B6%E6%88%91%E4%BB%AC%E5%B0%B1%E9%9C%80%E8%A6%81%E5%8F%96%E6%B6%88%E4%B8%8A%E4%B8%80%E6%AC%A1%20commit%20%E6%93%8D%E4%BD%9C%E3%80%82,commit%20%E6%93%8D%E4%BD%9C%E4%B8%80%E8%88%AC%E6%9C%89%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%EF%BC%9A%E4%BD%BF%E7%94%A8%20git%20revert%20%E5%91%BD%E4%BB%A4%E6%88%96%E4%BD%BF%E7%94%A8%20git%20reset%20%E5%91%BD%E4%BB%A4%E3%80%82">git中如何取消 commit 操作</a></span></p>
+<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">git reset --soft HEAD^</pre>
+<p><br/><br/></p>
+<p><span>這個命令將撤銷最後一個提交，但保留更改。如果您需要撤銷更多的提交，可以使用</span>HEAD~n</p>
+<p><code class="inline-flex max-w-full overflow-hidden rounded-sm cursor-pointer"></code><span>其中</span>n<code class="inline-flex max-w-full overflow-hidden rounded-sm cursor-pointer"></code><span>是要撤銷的提交數量。例如，如果您要撤銷最後兩個提交，可以使用以下命令：</span></p>
+<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">git reset --soft HEAD~2</pre>
+<p></p>
