@@ -1,24 +1,136 @@
 <h1>About</h1>
 <p>這裡將放置學習python的所有過程</p>
 <p>以便將來回憶與查詢</p>
-<p>網站網址:<a href="https://41023125.github.io/learning-process/content/index.html/">https://41023125.github.io/learning-process/content/index.html/</a></p>
+<p>網站網址:<a href="https://41023125.github.io/learning-process/">https://41023125.github.io/learning-process/</a></p>
 <p></p>
-<h1>course</h1>
-<p>這裡放置上課學的過程與知識</p>
 <h1>web page</h1>
 <p><span>這裡放置</span>所學編寫網頁之知識</p>
 <p></p>
 <h2>模板</h2>
 <p>所使用模板</p>
 <p><a href="/downloads/cmsimde.zip">cmsimde.zip</a></p>
-<h1>game</h1>
-<p>學習用python製作遊戲</p>
-<h1>adb</h1>
+<h1>OpenCV</h1>
+<p>使用python進行圖片處理</p>
+<h2>處理與比較</h2>
+<div>
+<div>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import cv2
+import numpy as np
+
+jpg1 = r"C:\initpython\ph\Screenshot_20230406-192510.jpg"
+image = cv2.imread(jpg1)
+
+
+# 裁剪
+def pag(image, start_x, start_y):
+    end_x = 95
+    end_y = 95
+    return image[start_y:start_y+end_y, start_x:start_x+end_x]
+
+
+# 比較
+def mse(image1, image2):
+    err = np.sum((image1.astype("float") - image2.astype("float")) ** 2)
+    err /= float(image1.shape[0] * image1.shape[1])
+    if err == 0:
+        return 100.0
+    else:
+        psnr = 10 * np.log10(255**2 / err)
+        similarity = (psnr / 50) * 100
+        return similarity
+
+
+image1 = pag(image, 195, 1090)
+image2 = cv2.imread(r"C:\initpython\ph\jpg\phcropped_image.png")
+
+
+# 顯示圖片
+'''
+cv2.imshow("Cropped Image", image2)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+'''
+
+# 儲存
+# cv2.imwrite("phcropped_image.png", image1)
+print("相似度: ", mse(image1, image2))
+</pre>
+</div>
+</div>
+<h2>辨識初步程式</h2>
+<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">import cv2
+import numpy as np
+
+jpg1 = r"C:\Users\alin\Nox_share\ImageShare\Screenshots\Screenshot_20230406-211216.png"
+image = cv2.imread(jpg1)
+
+
+# 裁剪
+def pag(image, start_x, start_y):
+    end_x = 95
+    end_y = 95
+    return image[start_y:start_y+end_y, start_x:start_x+end_x]
+
+
+# 比較
+def mse(image1, image2):
+    err = np.sum((image1.astype("float") - image2.astype("float")) ** 2)
+    err /= float(image1.shape[0] * image1.shape[1])
+    if err == 0:
+        return 100.0
+    else:
+        psnr = 10 * np.log10(255**2 / err)
+        similarity = (psnr / 50) * 100
+        return similarity
+
+
+image1 = pag(image, 195, 1090)
+# image2 = cv2.imread(r"C:\initpython\ph\jpg\5.png")
+
+
+# 顯示圖片
+'''
+cv2.imshow("Cropped Image", image1)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+'''
+
+# 儲存
+# cv2.imwrite("phcropped_image.png", image1)
+
+mes = 0
+ass = 0
+for i in range(1, 8):
+    image2 = cv2.imread(r"C:\\initpython\\ph\\jpg\\" + str(i) + ".png")
+    print("相似度: ", mse(image1, image2), "%")
+    if mes &lt; mse(image1, image2):
+        mes = mse(image1, image2)
+        ass = i
+if ass == 1:
+    print("小丑")
+elif ass == 2:
+    print("充電")
+elif ass == 3:
+    print("月亮")
+elif ass == 4:
+    print("聖劍")
+elif ass == 5:
+    print("雪球")
+elif ass == 6:
+    print("充電")
+elif ass == 7:
+    print("亮月亮")
+cv2.imshow("Cropped Image", image1)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+</pre>
+<p></p><h1>adb</h1>
 <p><a href="https://drive.google.com/file/d/1Jz0SCrmmJfHok8FH_F0pwIMWqxyfNwms/view?usp=share_link/"></a></p>
 <p>學習利用python控制手機與模擬器</p>
 <p><a href="https://hi-upchen.medium.com/%E5%A6%82%E4%BD%95%E5%9C%A8-win10-%E5%AE%89%E8%A3%9D-android-adb%E5%B7%A5%E5%85%B7-8546cb0b81ce">如何在 WIN10 安裝 Android ADB工具</a></p>
 <p><a href="https://hi-upchen.medium.com/%E5%A6%82%E4%BD%95%E8%AE%93-nox-%E5%A4%9C%E7%A5%9E%E6%A8%A1%E6%93%AC%E5%99%A8%E6%94%AF%E6%8F%B4-adb-3b10b2764967">如何讓 NOX 夜神模擬器支援 ADB</a></p>
 <p><a href="https://shengyu7697.github.io/android-adb/">Android adb 基本用法教學</a></p>
+<p><a href="https://www.yeshen.com/faqs/H15tDZ6YW">【新手指导】夜神安卓模拟器adb命令详解_夜神安卓模拟器新手帮助页 (yeshen.com)</a></p>
 <p><span>可以使用</span></p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">adb shell pm list packages | findstr dice
 </pre>
@@ -118,9 +230,10 @@ def click(x, y):
 click(500, 500)  # 點擊座標 (500, 500)
 </pre>
 </div>
-</div><h1>tel2023</h1>
+</div>
+<h1>tel2023</h1>
 <p>labview程式:</p>
-<p></p>
+<p><a href="https://drive.google.com/file/d/1jeEyfaqDKvxz0uE1AdAojRzPLV_Hj38D/view?usp=share_link/">https://drive.google.com/file/d/1jeEyfaqDKvxz0uE1AdAojRzPLV_Hj38D/view?usp=share_link/</a></p>
 <h2>直線校正</h2>
 <p><a href="https://drive.google.com/file/d/1Jz0SCrmmJfHok8FH_F0pwIMWqxyfNwms/view?usp=share_link/">直線校正.zip</a></p>
 <p><span></span></p>
@@ -176,7 +289,15 @@ app = Application(master=root)
 app.mainloop()
 </pre>
 <p><br/><br/></p>
-<h1>other</h1>
+<h1>RD</h1>
+<p><a href="https://play.google.com/store/apps/details?id=com.percent.royaldice">RD</a></p>
+<p>4/6開始執行方案</p>
+<p>目標做成自動排版RD版面的python程式</p>
+<p>預計使用夜神模擬器在電腦執行 </p>
+<p>自動判斷並移動</p>
+<p>使用<a href="https://41023125.github.io/learning-process/content/adb.html">abd</a>進行操控並獲取畫面</p>
+<p>使用<a href="https://41023125.github.io/learning-process/content/OpenCV.html">OpenCV</a>辨識處理</p>
+<p><br/><br/></p><h1>other</h1>
 <p>放置其他零散物品</p>
 <h2>建立倉儲</h2>
 <p>進入github選擇new repository.png</p>
