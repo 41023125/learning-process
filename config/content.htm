@@ -57,11 +57,12 @@ print("相似度: ", mse(image1, image2))
 </pre>
 </div>
 </div>
-<h2>辨識初步程式</h2>
-<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">import cv2
+<h2>辨識初步程式架構</h2>
+<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">import os
+import cv2
 import numpy as np
 
-jpg1 = r"C:\Users\alin\Nox_share\ImageShare\Screenshots\Screenshot_20230406-211216.png"
+jpg1 = r"C:\Users\alin\Nox_share\ImageShare\Screenshots\Screenshot_20230406-230719.png"
 image = cv2.imread(jpg1)
 
 
@@ -84,6 +85,31 @@ def mse(image1, image2):
         return similarity
 
 
+# 查詢類別
+def read_file(num):
+    mapping = {}
+    with open("ph\\dictionary.txt", 'r', encoding='utf-8') as f:
+        # 读取文件内容
+        lines = f.readlines()
+        for line in lines:
+            parts = line.split()
+            if len(parts) == 2:
+                key = int(parts[0])
+                value = parts[1]
+                mapping[key] = value
+    if num in mapping:
+        print(mapping[num])
+    else:
+        print('設置出現錯誤')
+
+
+# 檢查圖庫數量
+def count_files():
+    folder_path = "ph\\jpg"
+    files = os.listdir(folder_path)
+    return len(files)
+
+
 image1 = pag(image, 195, 1090)
 # image2 = cv2.imread(r"C:\initpython\ph\jpg\5.png")
 
@@ -100,26 +126,15 @@ cv2.destroyAllWindows()
 
 mes = 0
 ass = 0
-for i in range(1, 8):
-    image2 = cv2.imread(r"C:\\initpython\\ph\\jpg\\" + str(i) + ".png")
+for i in range(1, count_files()+1):
+    image2 = cv2.imread("ph\\jpg\\" + str(i) + ".png")
     print("相似度: ", mse(image1, image2), "%")
     if mes &lt; mse(image1, image2):
         mes = mse(image1, image2)
         ass = i
-if ass == 1:
-    print("小丑")
-elif ass == 2:
-    print("充電")
-elif ass == 3:
-    print("月亮")
-elif ass == 4:
-    print("聖劍")
-elif ass == 5:
-    print("雪球")
-elif ass == 6:
-    print("充電")
-elif ass == 7:
-    print("亮月亮")
+    if mes &lt; 10:
+        ass = 999
+read_file(ass)
 cv2.imshow("Cropped Image", image1)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
@@ -297,7 +312,217 @@ app.mainloop()
 <p>自動判斷並移動</p>
 <p>使用<a href="https://41023125.github.io/learning-process/content/adb.html">abd</a>進行操控並獲取畫面</p>
 <p>使用<a href="https://41023125.github.io/learning-process/content/OpenCV.html">OpenCV</a>辨識處理</p>
-<p><br/><br/></p><h1>other</h1>
+<h2>檢查版面上的骰子</h2>
+<p>預設值</p>
+<p>addx 195</p>
+<p>addy 1010</p>
+<p>end_x 95</p>
+<p>end_y 95</p>
+<div>
+<div><span>addx</span><span>+(</span><span>9</span><span>+</span><span>95</span><span>)*</span><span>x</span></div>
+<div>
+<div>
+<div><span>addy</span><span>-(</span><span>5</span><span>+</span><span>95</span><span>)*y</span></div>
+</div>
+</div>
+</div>
+<div>
+<div>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># pylint: disable=no-member
+# 此注釋用來禁用警告
+# 計算全部種類只用一次
+
+
+import os
+import numpy as np
+import cv2
+
+
+# 裁剪
+def pag(image, start_x, start_y):
+    end_x = 95
+    end_y = 95
+    return image[start_y:start_y+end_y, start_x:start_x+end_x]
+
+
+# 比較
+def mse(image1, image2):
+    err = np.sum((image1.astype("float") - image2.astype("float")) ** 2)
+    err /= float(image1.shape[0] * image1.shape[1])
+    if err == 0:
+        return 100.0
+    else:
+        psnr = 10 * np.log10(255**2 / err)
+        similarity = (psnr / 50) * 100
+        return similarity
+
+
+# 查詢類別
+def read_file(num):
+    mapping = {}
+    with open("ph\\dictionary.txt", 'r', encoding='utf-8') as f:
+        # 读取文件内容
+        lines = f.readlines()
+        for line in lines:
+            parts = line.split()
+            if len(parts) == 2:
+                key = int(parts[0])
+                value = parts[1]
+                mapping[key] = value
+    if num in mapping:
+        return mapping[num]
+    else:
+        print('未在dictionary.txt增新'+str(num)+"對應名稱")
+
+
+# 檢查圖庫數量
+def count_files():
+    folder_path = "ph\\jpg"
+    files = os.listdir(folder_path)
+    return len(files)
+
+
+# 查詢物體
+def check(image1):
+    mes = ass = 0
+    for i in range(0, count_files()):
+        image2 = cv2.imread("ph\\jpg\\" + str(i) + ".png")
+        # print("相似度: ", mse(image1, image2), "%")
+        if mse(image1, image2) &gt; 30:
+            mes = mse(image1, image2)
+            ass = i
+            break
+        if mes &lt; mse(image1, image2):
+            mes = mse(image1, image2)
+            ass = i
+    if mes &lt; 30:
+        # 儲存圖片
+        cv2.imwrite('ph/jpg/'+str((count_files()))+".png", image1)
+        with open("ph\\dictionary.txt", 'a', encoding='utf-8') as f:
+            count = int(count_files()) - 1
+            f.write(str(count) + '    '+read_file(ass)+'\n')
+        # print(count)
+        # 顯示圖片
+        '''
+        cv2.imshow("Cropped Image", image1)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()'''
+        # print("NO")
+    # print(ass)
+    ass = read_file(ass)
+    # print(mes)
+    return (ass)
+
+
+# 將陣列展示
+def output(my_array):
+    output = ''
+    for i in range(len(my_array)):
+        for j in range(len(my_array[i])):
+            output += str(my_array[i][j]) + ' '
+        output += '\n'
+    return output
+
+
+# 檢查全部
+def all(image):
+    addx = 195
+    addy = 1010
+    # x 9 # y 5 # addx = 195 # addy = 1010
+    # 创建一个3x5的空二维數组
+    my_array = [[0 for j in range(5)] for i in range(3)]
+    for x in range(5):
+        for y in range(3):
+            image1 = pag(image, addx+(9+95)*x, addy-(5+95)*y)
+            my_array[y][x] = check(image1)
+    my_array = my_array[::-1]
+    outpu = output(my_array)
+    print(outpu)
+    return my_array
+    '''#單片檢查
+    image1 = pag(image, addx+(9+95)*0, addy-(5+95)*2)
+    cv2.imshow("Cropped Image", image1)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    '''
+
+
+'''
+# 測試
+jpg1 = "ph\screenshot2.png"
+image = cv2.imread(jpg1)
+ass = all(image)
+'''
+</pre>
+</div>
+</div>
+<p><strong></strong></p>
+<h2>檢查造骰按鈕狀態</h2>
+<p>預設值</p>
+<p>addx 195</p>
+<p>addy 1090</p>
+<p>end_x 95</p>
+<p>end_y 20</p>
+<div>
+<div>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># pylint: disable=no-member
+# 此注釋用來禁用警告
+# 檢查造骰按鈕狀態
+import numpy as np
+import cv2
+
+
+def push(image):
+    addx = 195
+    addy = 1090
+    image1 = pag(image, addx+(9+95)*2, addy-(5+95)*-2)
+    return check(image1)
+
+
+def pag(image, start_x, start_y):
+    end_x = 95
+    end_y = 20
+    return image[start_y:start_y+end_y, start_x:start_x+end_x]
+
+
+def mse(image1, image2):
+    err = np.sum((image1.astype("float") - image2.astype("float")) ** 2)
+    err /= float(image1.shape[0] * image1.shape[1])
+    if err == 0:
+        return 100.0
+    else:
+        psnr = 10 * np.log10(255**2 / err)
+        similarity = (psnr / 50) * 100
+        return similarity
+
+
+def check(image1):
+    mes = ass = 0
+    for i in range(1, 4):
+        if i == 1:
+            x = "open"
+        elif i == 2:
+            x = "closure"
+        else:
+            x = "error"
+        image2 = cv2.imread("ph\\summon\\" + x + ".png")
+        # print("相似度: ", mse(image1, image2), "%")
+        if mes &lt; mse(image1, image2):
+            mes = mse(image1, image2)
+            ass = x
+    # print(mes)
+    return (ass)
+
+
+'''
+# 測試
+jpg1 = "ph\screenshot1.png"
+image = cv2.imread(jpg1)
+print(push(image))
+'''</pre>
+</div>
+</div>
+<p><strong></strong></p><h1>other</h1>
 <p>放置其他零散物品</p>
 <h2>建立倉儲</h2>
 <p>進入github選擇new repository.png</p>
