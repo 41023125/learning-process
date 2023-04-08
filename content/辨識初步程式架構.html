@@ -130,7 +130,7 @@ img.add_border {
                             <li><a href="./../blog/index.html">blog</a></li>
                         </ul>
                       </li>
-                     <li><a href='About.html'>About</a><li class='has-children'><a href='web page.html'>web page</a><ul class='dropdown'><li><a href='模板.html'>模板</a></li></ul><li class='has-children'><a href='OpenCV.html'>OpenCV</a><ul class='dropdown'><li><a href='處理與比較.html'>處理與比較</a><li><a href='辨識初步程式.html'>辨識初步程式</a></li></ul><li class='has-children'><a href='adb.html'>adb</a><ul class='dropdown'><li><a href='列出設備上的應用程式.html'>列出設備上的應用程式</a><li><a href='測試端口是否正常連接.html'>測試端口是否正常連接</a><li><a href='取得目前應用程式的包名稱和主活動.html'>取得目前應用程式的包名稱和主活動</a><li><a href='截圖.html'>截圖</a><li><a href='點擊.html'>點擊</a></li></ul><li class='has-children'><a href='tel2023.html'>tel2023</a><ul class='dropdown'><li><a href='直線校正.html'>直線校正</a></li></ul><li><a href='RD.html'>RD</a><li class='has-children'><a href='other.html'>other</a><ul class='dropdown'><li><a href='建立倉儲.html'>建立倉儲</a><li><a href='設定Personal access tokens(碼牌).html'>設定Personal access tokens(碼牌)</a><li><a href='可攜.html'>可攜</a><li><a href='key.py.html'>key.py</a></li></ul><li class='has-children'><a href='question.html'>question</a><ul class='dropdown'><li><a href='上傳檔案太大.html'>上傳檔案太大</a><li><a href='取消commit.html'>取消commit</a></li>
+                     <li><a href='About.html'>About</a><li class='has-children'><a href='web page.html'>web page</a><ul class='dropdown'><li><a href='模板.html'>模板</a></li></ul><li class='has-children'><a href='OpenCV.html'>OpenCV</a><ul class='dropdown'><li><a href='處理與比較.html'>處理與比較</a><li><a href='辨識初步程式架構.html'>辨識初步程式架構</a></li></ul><li class='has-children'><a href='adb.html'>adb</a><ul class='dropdown'><li><a href='列出設備上的應用程式.html'>列出設備上的應用程式</a><li><a href='測試端口是否正常連接.html'>測試端口是否正常連接</a><li><a href='取得目前應用程式的包名稱和主活動.html'>取得目前應用程式的包名稱和主活動</a><li><a href='截圖.html'>截圖</a><li><a href='點擊.html'>點擊</a></li></ul><li class='has-children'><a href='tel2023.html'>tel2023</a><ul class='dropdown'><li><a href='直線校正.html'>直線校正</a></li></ul><li class='has-children'><a href='RD.html'>RD</a><ul class='dropdown'><li><a href='檢查版面上的骰子.html'>檢查版面上的骰子</a><li><a href='檢查造骰按鈕狀態.html'>檢查造骰按鈕狀態</a><li><a href='測試框選範圍.html'>測試框選範圍</a></li></ul><li class='has-children'><a href='other.html'>other</a><ul class='dropdown'><li><a href='建立倉儲.html'>建立倉儲</a><li><a href='設定Personal access tokens(碼牌).html'>設定Personal access tokens(碼牌)</a><li><a href='可攜.html'>可攜</a><li><a href='key.py.html'>key.py</a></li></ul><li class='has-children'><a href='question.html'>question</a><ul class='dropdown'><li><a href='上傳檔案太大.html'>上傳檔案太大</a><li><a href='取消commit.html'>取消commit</a></li>
                       </ul>
                 </nav>
               </div>
@@ -141,11 +141,12 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">處理與比較 << <a href='處理與比較.html'>Previous</a> <a href='adb.html'>Next</a> >> adb<br /><h1>辨識初步程式</h1>
-<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">import cv2
+    <div id="tipue_search_content">處理與比較 << <a href='處理與比較.html'>Previous</a> <a href='adb.html'>Next</a> >> adb<br /><h1>辨識初步程式架構</h1>
+<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">import os
+import cv2
 import numpy as np
 
-jpg1 = r"C:\Users\alin\Nox_share\ImageShare\Screenshots\Screenshot_20230406-211216.png"
+jpg1 = r"C:\Users\alin\Nox_share\ImageShare\Screenshots\Screenshot_20230406-230719.png"
 image = cv2.imread(jpg1)
 
 
@@ -168,6 +169,31 @@ def mse(image1, image2):
         return similarity
 
 
+# 查詢類別
+def read_file(num):
+    mapping = {}
+    with open("ph\\dictionary.txt", 'r', encoding='utf-8') as f:
+        # 读取文件内容
+        lines = f.readlines()
+        for line in lines:
+            parts = line.split()
+            if len(parts) == 2:
+                key = int(parts[0])
+                value = parts[1]
+                mapping[key] = value
+    if num in mapping:
+        print(mapping[num])
+    else:
+        print('設置出現錯誤')
+
+
+# 檢查圖庫數量
+def count_files():
+    folder_path = "ph\\jpg"
+    files = os.listdir(folder_path)
+    return len(files)
+
+
 image1 = pag(image, 195, 1090)
 # image2 = cv2.imread(r"C:\initpython\ph\jpg\5.png")
 
@@ -184,26 +210,15 @@ cv2.destroyAllWindows()
 
 mes = 0
 ass = 0
-for i in range(1, 8):
-    image2 = cv2.imread(r"C:\\initpython\\ph\\jpg\\" + str(i) + ".png")
+for i in range(1, count_files()+1):
+    image2 = cv2.imread("ph\\jpg\\" + str(i) + ".png")
     print("相似度: ", mse(image1, image2), "%")
     if mes &lt; mse(image1, image2):
         mes = mse(image1, image2)
         ass = i
-if ass == 1:
-    print("小丑")
-elif ass == 2:
-    print("充電")
-elif ass == 3:
-    print("月亮")
-elif ass == 4:
-    print("聖劍")
-elif ass == 5:
-    print("雪球")
-elif ass == 6:
-    print("充電")
-elif ass == 7:
-    print("亮月亮")
+    if mes &lt; 10:
+        ass = 999
+read_file(ass)
 cv2.imshow("Cropped Image", image1)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
