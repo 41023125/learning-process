@@ -141,14 +141,49 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">取得目前應用程式的包名稱和主活動 << <a href='取得目前應用程式的包名稱和主活動.html'>Previous</a> <a href='點擊.html'>Next</a> >> 點擊<br /><h1>截圖</h1>
-<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import subprocess
+    <div id="tipue_search_content">測試框選範圍 << <a href='測試框選範圍.html'>Previous</a> <a href='svm.html'>Next</a> >> svm<br /><h1>辨識改成多線程</h1>
+<div>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from concurrent import futures
+import cv2
+from database import check,pag,output
+from main import timer
 
-subprocess.run("adb shell screencap -p /sdcard/screenshot.png")
-subprocess.run("adb pull /sdcard/screenshot.png .")
-subprocess.run("adb shell rm /sdcard/screenshot.png")</pre>
-<p></p>
-<br />取得目前應用程式的包名稱和主活動 << <a href='取得目前應用程式的包名稱和主活動.html'>Previous</a> <a href='點擊.html'>Next</a> >> 點擊</div>
+
+
+@timer
+def check_all(aimage):
+    """
+    檢查全部的圖片並返回成陣列
+    單片檢查
+    image1 = pag(image, addx+(9+95)*0, addy-(5+95)*2)
+    look(image1)
+    """
+    addx = 195
+    addy = 1090
+    # x 9 # y 5 # addx = 195 # addy = 1010
+    # 创建一个3x5的空二维數组
+    my_array = [[0 for j in range(5)] for i in range(3)]
+    futures_list = []
+    with futures.ThreadPoolExecutor() as executor:
+        for xx in range(5):
+            for yy in range(3):
+                image1 = pag(aimage, addx+(9+95)*xx, addy-(5+95)*yy)
+                future = executor.submit(check, image1)
+                futures_list.append((future, xx, yy))
+        for f, xx, yy in sorted(futures_list, key=lambda x: (x[1], x[2])):
+            my_array[yy][xx] = f.result()
+    my_array = my_array[::-1]
+    outpu = output(my_array)
+    print(outpu)
+    return my_array
+JPG1 = "screenshot1.png"
+image = cv2.imread(JPG1)
+ass = check_all(image)
+''''''</pre>
+</div>
+<p>速度差距</p>
+<p><img alt="" height="196" src="./../images/rd/多線程.png" width="266"/></p>
+<br />測試框選範圍 << <a href='測試框選範圍.html'>Previous</a> <a href='svm.html'>Next</a> >> svm</div>
         
     <!-- footer -->
       <div class="container">

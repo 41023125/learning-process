@@ -303,8 +303,9 @@ root = tk.Tk()
 app = Application(master=root)
 app.mainloop()
 </pre>
-<p><br/><br/></p>
-<h1>RD</h1>
+<p></p>
+<h2>連接python</h2>
+<p><img alt="" src="/images/tel2023/提問"/><img alt="" height="319" src="/images/tel2023/提問.png" width="467"/></p><h1>RD</h1>
 <p><a href="https://play.google.com/store/apps/details?id=com.percent.royaldice">RD</a></p>
 <p>4/6開始執行方案</p>
 <p>目標做成自動排版RD版面的python程式</p>
@@ -323,6 +324,8 @@ app.mainloop()
 <div>
 <div>
 <div><span>addy</span><span>-(</span><span>5</span><span>+</span><span>95</span><span>)*y</span></div>
+<div><span></span></div>
+<div><span>*將運算更改成多線程</span></div>
 </div>
 </div>
 </div>
@@ -332,16 +335,21 @@ app.mainloop()
 """
 此注釋用來禁用警告
 """
-
 # 計算全部種類只用一次
-
-
 import os
 import numpy as np
 import cv2
-
+import time
+from concurrent import futures
 # 查看圖片
-
+def timer(func):
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        print("程式運行時間：{:.2f}秒".format(end_time - start_time))
+        return result
+    return wrapper
 
 def look(aimage):
     """
@@ -386,7 +394,7 @@ def read_file(num):
     返回數字在文本對應的內容
     """
     mapping = {}
-    with open("ph\\dictionary.txt", 'r', encoding='utf-8') as f:
+    with open("dictionary.txt", 'r', encoding='utf-8') as f:
         # 读取文件内容
         lines = f.readlines()
         for line in lines:
@@ -406,7 +414,7 @@ def count_files():
     """
     返回圖庫的檔案數量
     """
-    folder_path = "ph\\jpg"
+    folder_path = "jpg"
     files = os.listdir(folder_path)
     return len(files)
 
@@ -416,7 +424,7 @@ def check(image1):
     比較圖庫所有內容並返回最相近的名稱
     if mes &lt; 30:
             # 儲存圖片
-            cv2.imwrite('ph/jpg/'+str((count_files()))+".png", image1)
+            cv2.imwrite('jpg/'+str((count_files()))+".png", image1)
             with open("ph\\dictionary.txt", 'a', encoding='utf-8') as f:
                 count = int(count_files()) - 1
                 f.write(str(count) + '    '+read_file(ass)+'\n')
@@ -426,9 +434,9 @@ def check(image1):
     """
     mes = aass = 0
     for i in range(0, count_files()):
-        image2 = cv2.imread("ph\\jpg\\" + str(i) + ".png")
+        image2 = cv2.imread("jpg\\" + str(i) + ".png")
         # print("相似度: ", mse(image1, image2), "%")
-        if mse(image1, image2) &gt; 30:
+        if mse(image1, image2) &gt;50:
             mes = mse(image1, image2)
             aass = i
             break
@@ -453,8 +461,10 @@ def output(my_array):
         aoutput += '\n'
     return aoutput
 
-
 # 檢查全部
+
+_='''單線程棄用
+@timer
 def check_all(aimage):
     """
     檢查全部的圖片並返回成陣列
@@ -475,15 +485,42 @@ def check_all(aimage):
     outpu = output(my_array)
     print(outpu)
     return my_array
+'''
+@timer
+def check_all(aimage):
+    """
+    檢查全部的圖片並返回成陣列
+    單片檢查
+    image1 = pag(image, addx+(9+95)*0, addy-(5+95)*2)
+    look(image1)
+    """
+    addx = 195
+    addy = 1090
+    # x 9 # y 5 # addx = 195 # addy = 1010
+    # 创建一个3x5的空二维數组
+    my_array = [[0 for j in range(5)] for i in range(3)]
+    futures_list = []
+    with futures.ThreadPoolExecutor() as executor:
+        for xx in range(5):
+            for yy in range(3):
+                image1 = pag(aimage, addx+(9+95)*xx, addy-(5+95)*yy)
+                future = executor.submit(check, image1)
+                futures_list.append((future, xx, yy))
+        for f, xx, yy in sorted(futures_list, key=lambda x: (x[1], x[2])):
+            my_array[yy][xx] = f.result()
+    my_array = my_array[::-1]
+    outpu = output(my_array)
+    print(outpu)
+    return my_array
 
 
 # 測試
-
-JPG1 = "ph//screenshot1.png"
+'''
+JPG1 = "screenshot2.png"
 image = cv2.imread(JPG1)
 ass = check_all(image)
-print(ass)
-</pre>
+#print(ass)
+'''</pre>
 </div>
 </div>
 <p><strong></strong></p><h2>檢查造骰按鈕狀態</h2>
@@ -603,6 +640,86 @@ image = cv2.imread(JPG1)
 look(pag(image))
 </pre>
 </div>
+</div>
+<h2>辨識改成多線程</h2>
+<div>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from concurrent import futures
+import cv2
+from database import check,pag,output
+from main import timer
+
+
+
+@timer
+def check_all(aimage):
+    """
+    檢查全部的圖片並返回成陣列
+    單片檢查
+    image1 = pag(image, addx+(9+95)*0, addy-(5+95)*2)
+    look(image1)
+    """
+    addx = 195
+    addy = 1090
+    # x 9 # y 5 # addx = 195 # addy = 1010
+    # 创建一个3x5的空二维數组
+    my_array = [[0 for j in range(5)] for i in range(3)]
+    futures_list = []
+    with futures.ThreadPoolExecutor() as executor:
+        for xx in range(5):
+            for yy in range(3):
+                image1 = pag(aimage, addx+(9+95)*xx, addy-(5+95)*yy)
+                future = executor.submit(check, image1)
+                futures_list.append((future, xx, yy))
+        for f, xx, yy in sorted(futures_list, key=lambda x: (x[1], x[2])):
+            my_array[yy][xx] = f.result()
+    my_array = my_array[::-1]
+    outpu = output(my_array)
+    print(outpu)
+    return my_array
+JPG1 = "screenshot1.png"
+image = cv2.imread(JPG1)
+ass = check_all(image)
+''''''</pre>
+</div>
+<p>速度差距</p>
+<p><img alt="" height="196" src="/images/rd/多線程.png" width="266"/></p>
+<h2>svm</h2>
+<div>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import cv2
+from sklearn import svm
+
+# 讀取圖像數據集和答案
+data = []
+labels = []
+'''
+with open("C:/initpython/ph/dictionary.txt", "r", encoding="utf-8") as f:
+    for i, line in enumerate(f):
+        values = line.strip().split()
+        if len(values) != 2:
+            print(f"Error: line {i+1} contains {len(values)} values.")
+'''
+with open("C:/initpython/ph/dictionary.txt", "r", encoding="utf-8") as f:
+    for line in f:
+        filename, label = line.strip().split()
+        print(filename)
+        img = cv2.imread(f"C:/initpython/ph/jpg/{filename}.png", 0)  # 讀取灰度圖像
+        img = cv2.resize(img, (95, 95))  # 調整圖像大小
+        data.append(img.flatten())  # 將圖像數據展平為一維數組
+        labels.append(label)  # 將答案添加到標籤列表中
+
+# 創建SVM模型
+clf = svm.SVC(kernel='linear')
+
+# 訓練模型
+clf.fit(data, labels)
+
+# 讀取要預測的圖像
+img = cv2.imread("C:/initpython/ph/jpg/1.png", 0)  # 讀取灰度圖像
+img = cv2.resize(img, (95, 95))  # 調整圖像大小
+data = img.flatten()  # 將圖像數據展平為一維數組
+
+# 預測圖像
+prediction = clf.predict([data])</pre>
 </div><h1>other</h1>
 <p>放置其他零散物品</p>
 <h2>建立倉儲</h2>
