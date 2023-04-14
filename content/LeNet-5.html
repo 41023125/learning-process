@@ -141,21 +141,87 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">adb << <a href='adb.html'>Previous</a> <a href='測試端口是否正常連接.html'>Next</a> >> 測試端口是否正常連接<br /><h1>列出設備上的應用程式</h1>
-<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">from ppadb.client import Client
- 
-# 建立 ADB 連線
-adb = Client(host='127.0.0.1', port=5037)
-device = adb.device('127.0.0.1:62001')
- 
-# 取得所有已安裝應用程式列表
-result = device.shell('pm list packages')
-packages = [line.strip()[8:] for line in result.split('\n') if line.strip()]
- 
-# 列出所有應用程式名稱
-for package in packages:
-    print(package)</pre>
-<br />adb << <a href='adb.html'>Previous</a> <a href='測試端口是否正常連接.html'>Next</a> >> 測試端口是否正常連接</div>
+    <div id="tipue_search_content">svm << <a href='svm.html'>Previous</a> <a href='other.html'>Next</a> >> other<br /><h1>LeNet-5</h1>
+<div>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import cv2
+import numpy as np
+import tensorflow as tf
+from keras.models import Sequential
+from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+
+# 設置GPU加速
+gpus = tf.config.experimental.list_physical_devices('GPU')
+if gpus:
+    try:
+        tf.config.experimental.set_virtual_device_configuration(
+            gpus[0],
+            [tf.config.experimental.VirtualDeviceConfiguration(memory_limit=1024)]
+        )
+    except RuntimeError as e:
+        print(e)
+
+
+
+def create_model():
+    model = Sequential()
+    model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(95, 95, 1)))
+    model.add(MaxPooling2D((2, 2)))
+    model.add(Conv2D(64, (3, 3), activation='relu'))
+    model.add(MaxPooling2D((2, 2)))
+    model.add(Conv2D(128, (3, 3), activation='relu'))
+    model.add(MaxPooling2D((2, 2)))
+    model.add(Flatten())
+    model.add(Dense(128, activation='relu'))
+    model.add(Dense(31, activation='softmax'))  # 將輸出層改為31個神經元
+    model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+    return model
+
+
+# 訓練模型
+def train_model():
+    data = []
+    labels = []
+    label_map = {}
+    with open("label_map.txt", "r", encoding="utf-8") as f:  
+        for line in f:
+            label, value = line.strip().split(":")
+            label_map[label] = int(value)
+    with open("C:/initpython/ph/dictionary.txt", "r", encoding="utf-8") as f:
+        for line in f:
+            filename, label = line.strip().split()
+            img = cv2.imread(f"C:/initpython/ph/jpg/{filename}.png", 0)  # 讀取灰度圖像
+            img = cv2.resize(img, (95, 95))  # 調整圖像大小
+            data.append(img.reshape((95, 95, 1)))  # 將圖像數據轉換為3D數組
+            if label in label_map:
+                labels.append(label_map[label])  # 將答案添加到標籤列表中
+            else:
+                print(f"Invalid label: {label}. Skipping this data.")
+
+    data = np.array(data)
+    labels = np.array(labels)
+
+    model = create_model()
+    model.fit(data, labels, epochs=10, batch_size=32)
+
+    return model
+
+# 預測圖像
+def predict_image(filename1, model):
+    img = cv2.imread(filename1, 0)  # 讀取灰度圖像
+    img = cv2.resize(img, (95, 95))  # 調整圖像大小
+    data = img.reshape((1, 95, 95, 1))  # 將圖像數據轉換為4D數組
+
+    prediction = model.predict(data)
+
+    return np.argmax(prediction)
+
+# 訓練模型
+model = train_model()
+
+# 預測圖像
+result = predict_image("C:/initpython/ph/jpg/2.png", model)
+print(f"This image belongs to class {result}.")</pre>
+</div><br />svm << <a href='svm.html'>Previous</a> <a href='other.html'>Next</a> >> other</div>
         
     <!-- footer -->
       <div class="container">
