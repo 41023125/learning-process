@@ -141,21 +141,10 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">adb << <a href='adb.html'>Previous</a> <a href='測試端口是否正常連接.html'>Next</a> >> 測試端口是否正常連接<br /><h1>列出設備上的應用程式</h1>
-<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">from ppadb.client import Client
- 
-# 建立 ADB 連線
-adb = Client(host='127.0.0.1', port=5037)
-device = adb.device('127.0.0.1:62001')
- 
-# 取得所有已安裝應用程式列表
-result = device.shell('pm list packages')
-packages = [line.strip()[8:] for line in result.split('\n') if line.strip()]
- 
-# 列出所有應用程式名稱
-for package in packages:
-    print(package)</pre>
-<br />adb << <a href='adb.html'>Previous</a> <a href='測試端口是否正常連接.html'>Next</a> >> 測試端口是否正常連接</div>
+    <div id="tipue_search_content">取消commit << <a href='取消commit.html'>Previous</a> <a href='強制push.html'>Next</a> >> 強制push<br /><h1>恢復之前版本</h1>
+<p><a href="https://blog.csdn.net/yxlshk/article/details/79944535">Git恢复之前版本的两种方法reset、revert（图文详解）</a></p>
+<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">git reset --hard 目標版本號</pre>
+<p><br/><br/></p><br />取消commit << <a href='取消commit.html'>Previous</a> <a href='強制push.html'>Next</a> >> 強制push</div>
         
     <!-- footer -->
       <div class="container">
