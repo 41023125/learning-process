@@ -804,7 +804,45 @@ result = predict_image("C:/initpython/ph/jpg/2.png", model)
 print(f"This image belongs to class {result}.")</pre>
 </div>
 <h1>Unity</h1>
-<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/nPW6tKeapsM" title="YouTube video player" width="560"></iframe></p><h1>other</h1>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/nPW6tKeapsM" title="YouTube video player" width="560"></iframe></p>
+<div>
+<div>
+<div>
+<div><span>void</span><span> </span><span>Start</span><span>(){}//開始時只執行一次</span></div>
+<div>
+<div>
+<div><span>void</span><span> </span><span>Update</span><span>()</span><span>{}//重複執行</span></div>
+</div>
+</div>
+</div>
+</div>
+<div><span>Debug.Log(123); //將括號內容顯示在consoleg上面</span></div>
+<div><span>public //公用</span></div>
+<div>
+<div><span>[</span><span>SerializeField</span><span>]</span></div>
+<div><span>rigidbody 剛體</span></div>
+<div><span>collider 碰撞</span></div>
+<div><span></span></div>
+<div></div>
+<div>
+<div><span>private</span><span> </span><span>void</span><span> </span><span>OnCollisionEnter2D</span><span>(</span><span>Collision2D</span><span> </span><span>other</span><span>) </span></div>
+<div><span>    {</span></div>
+<div><span><span>       </span></span>
+<div>
+<div><span>        if</span><span>(</span><span>other</span><span>.</span><span>gameObject</span><span>.</span><span>tag</span><span> </span><span>==</span><span> </span><span>"food"</span><span>)</span></div>
+<div><span>        {</span></div>
+<div><span>            </span><span>Debug</span><span>.</span><span>Log</span><span>(</span><span>"撞到了"</span><span>);</span></div>
+<div><span>        }</span></div>
+</div>
+</div>
+<div><span>    }//碰撞檢測</span></div>
+<div></div>
+<div>else if </div>
+<div></div>
+<div><span>other.</span></div>
+</div>
+</div>
+</div><h1>other</h1>
 <p>放置其他零散物品</p>
 <h2>建立倉儲</h2>
 <p>進入github選擇new repository.png</p>
