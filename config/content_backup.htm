@@ -827,9 +827,19 @@ print(f"This image belongs to class {result}.")</pre>
 <div>
 <div><span>private</span><span> </span><span>void</span><span> </span><span>OnCollisionEnter2D</span><span>(</span><span>Collision2D</span><span> </span><span>other</span><span>) </span></div>
 <div><span>    {</span></div>
-<div><span>        </span><span>Debug</span><span>.</span><span>Log</span><span>(</span><span>"撞到了"</span><span>);</span></div>
+<div><span><span>       </span></span>
+<div>
+<div><span>        if</span><span>(</span><span>other</span><span>.</span><span>gameObject</span><span>.</span><span>tag</span><span> </span><span>==</span><span> </span><span>"food"</span><span>)</span></div>
+<div><span>        {</span></div>
+<div><span>            </span><span>Debug</span><span>.</span><span>Log</span><span>(</span><span>"撞到了"</span><span>);</span></div>
+<div><span>        }</span></div>
+</div>
+</div>
 <div><span>    }//碰撞檢測</span></div>
 <div></div>
+<div>else if </div>
+<div></div>
+<div><span>other.</span></div>
 </div>
 </div>
 </div><h1>other</h1>
