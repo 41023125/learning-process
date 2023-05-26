@@ -2,7 +2,7 @@
         <head>
         <title>learning-process</title>
         <meta charset="utf-8">
-<meta property="head" content="H1">
+<meta property="head" content="H3">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700,900" rel="stylesheet">
         <link rel="stylesheet" href="./../cmsimde/static/chimper/fonts/icomoon/style.css">
@@ -141,28 +141,46 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">辨識初步程式架構 << <a href='辨識初步程式架構.html'>Previous</a> <a href='列出設備上的應用程式.html'>Next</a> >> 列出設備上的應用程式<br /><h1>adb</h1>
-<p><a href="https://drive.google.com/file/d/1Jz0SCrmmJfHok8FH_F0pwIMWqxyfNwms/view?usp=share_link/"></a></p>
-<p>學習利用python控制手機與模擬器</p>
-<p><a href="https://hi-upchen.medium.com/%E5%A6%82%E4%BD%95%E5%9C%A8-win10-%E5%AE%89%E8%A3%9D-android-adb%E5%B7%A5%E5%85%B7-8546cb0b81ce">如何在 WIN10 安裝 Android ADB工具</a></p>
-<p><a href="https://hi-upchen.medium.com/%E5%A6%82%E4%BD%95%E8%AE%93-nox-%E5%A4%9C%E7%A5%9E%E6%A8%A1%E6%93%AC%E5%99%A8%E6%94%AF%E6%8F%B4-adb-3b10b2764967">如何讓 NOX 夜神模擬器支援 ADB</a></p>
-<p><a href="https://shengyu7697.github.io/android-adb/">Android adb 基本用法教學</a></p>
-<p><a href="https://www.yeshen.com/faqs/H15tDZ6YW">【新手指导】夜神安卓模拟器adb命令详解_夜神安卓模拟器新手帮助页 (yeshen.com)</a></p>
-<p><span>可以使用</span></p>
-<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">adb shell pm list packages | findstr dice
+    <div id="tipue_search_content">如何抓取html << <a href='如何抓取html.html'>Previous</a> <a href='other.html'>Next</a> >> other<br /><h1>提取資料</h1>
+<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">from bs4 import BeautifulSoup
+import requests
+url = "https://41023125.github.io/learning-process/content/index.html"
+response = requests.get(url)
+soup = BeautifulSoup(response.coent.decode('UTF-8'), 'html.parser')
+span_tags = soup.find_all(['a'])
+print(span_tags)
 </pre>
-<p><span><br/></span><span>指令來查看當前顯示的應用程式的相關資訊，其中 mCurrentFocus 顯示目前的視窗和活動的應用程式包名和類名，mFocusedApp 顯示當前焦點的應用程式包名和進程 ID。可以在模擬器或設備上執行此指令，以獲得目標應用程式的包名和主活動。</span></p>
-<p><span>假設輸出了package:com.percent.royaldice</span></p>
-<p><span>可以使用</span></p>
-<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">adb shell monkey -p com.percent.royaldice -c android.intent.category.LAUNCHER 1</pre>
-<p><span><br/><br/></span></p>
-<p><span>打開程式</span></p>
-<p>使用</p>
-<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">adb shell am force-stop com.percent.royaldice</pre>
-<p><br/><br/></p>
-<p>關閉程式</p>
-<p><span></span></p>
-<br />辨識初步程式架構 << <a href='辨識初步程式架構.html'>Previous</a> <a href='列出設備上的應用程式.html'>Next</a> >> 列出設備上的應用程式</div>
+<p>延續前篇加入span_tags = soup.find_all(['a'])</p>
+<p><code>find_all</code><span> 是 BeautifulSoup 中的一個方法，它用於尋找符合指定條件的所有元素。在這個例子中，條件是 </span><code>['a']</code><span>，表示尋找所有的 </span><code>&lt;a&gt;</code><span> 標籤元素。</span></p>
+<p>除了 <code>find_all</code> 方法之外，BeautifulSoup 還提供了其他常用的方法來解析和操縱網頁的內容。以下是一些常見的 BeautifulSoup 方法：</p>
+<ol>
+<li><code>find(tag, attrs, recursive, text, **kwargs)</code>：尋找符合條件的第一個元素，與 <code>find_all</code> 類似，但只返回第一個匹配的結果。</li>
+<li><code>find_next(tag, attrs, recursive, text, **kwargs)</code>：尋找下一個符合條件的元素。</li>
+<li><code>find_all_next(tag, attrs, recursive, text, **kwargs)</code>：尋找之後所有符合條件的元素。</li>
+<li><code>find_previous(tag, attrs, recursive, text, **kwargs)</code>：尋找前一個符合條件的元素。</li>
+<li><code>find_all_previous(tag, attrs, recursive, text, **kwargs)</code>：尋找之前所有符合條件的元素。</li>
+<li><code>select(selector)</code>：使用 CSS 選擇器選擇元素。</li>
+<li><code>get_text()</code>：獲取元素的內容文本。</li>
+<li><code>get(tag, default)</code>：獲取元素的屬性值。</li>
+<li><code>has_attr(name)</code>：檢查元素是否具有指定的屬性。</li>
+<li><code>prettify()</code>：以縮進和換行的方式返回美化後的 HTML 字符串。</li>
+</ol>
+<p><a>&lt;a&gt;標籤是 HTML 中的超連結元素，通常用於創建鏈接到其他網頁或文件的文字或圖片。這行程式碼的目的是從 soup 物件中找到所有的&lt;a&gt;</a><a>標籤元素。</a></p>
+<p>例如想要抓取全部&lt;a&gt;標籤下的<span>href屬性裡面的內容 </span></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">span_tags = soup.find_all('a')
+for span_tag in span_tags:
+    class_attr = span_tag.get("href")
+    if class_attr:
+        print(class_attr)</pre>
+<p>想要抓取<code>&lt;a&gt;</code><span> 標籤所顯示的文字內容</span></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">a_tags = soup.find_all('a')
+for a_tag in a_tags:
+    text_content = a_tag.get_text()
+    print(text_content)
+</pre>
+<p><span>使用 </span><code>get_text()</code><span> 方法獲取 </span><code>&lt;a&gt;</code><span> 標籤內的文字內容</span></p>
+<p><span>使用 <code>get_text()</code><span> 方法時，它會返回所有子節點的文字內容，包括嵌套的子元素。如果只想獲取直接內容，而不包括子元素的文字，可以使用 </span><code>string</code><span> 屬性，像這樣：</span><code>text_content = a_tag.string</code><span>。</span></span></p>
+<p><span><span></span></span></p><br />如何抓取html << <a href='如何抓取html.html'>Previous</a> <a href='other.html'>Next</a> >> other</div>
         
     <!-- footer -->
       <div class="container">

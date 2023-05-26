@@ -847,7 +847,7 @@ print(f"This image belongs to class {result}.")</pre>
 </div>
 </div>
 <h1>專案</h1>
-<h2>小說更新爬蟲</h2>
+<h2>小說爬蟲</h2>
 <p><a href="/downloads/dist.7z">程式執行檔</a></p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import requests
 from bs4 import BeautifulSoup
@@ -934,7 +934,106 @@ def save_to_txt(file_path, data):
 output_file_path = '書本.txt'
 save_to_txt(output_file_path, h3_contents)
 ''''''</pre>
-<p></p><h1>other</h1>
+<p></p><h3>如何抓取html</h3>
+<div>
+<div><span></span></div>
+<div>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from bs4 import BeautifulSoup
+import requests
+url = "https://41023125.github.io/learning-process/content/index.html"
+response = requests.get(url)
+soup = BeautifulSoup(response.content.decode('UTF-8'), 'html.parser')
+print(soup)</pre>
+</div>
+</div>
+<p>url 是想抓取的網址</p>
+<p><code>response = requests.get(url)</code><span> 發送GET請求到指定的URL，並將伺服器的回應存儲在</span><code>response</code><span>變數中。這個回應物件包含了網頁的內容、狀態碼、標頭信息等。</span></p>
+<p><span>response有以下幾種輸出</span></p>
+<p>在這個情境下，<code>&lt;Response [200]&gt;</code> 表示成功從網頁伺服器接收到回應，並且狀態碼為 200。HTTP狀態碼是一種表示HTTP請求的結果的三位數字代碼。常見的狀態碼包括：</p>
+<ul>
+<li>200: OK，表示請求成功，並且伺服器已成功返回所請求的數據。</li>
+<li>404: Not Found，表示所請求的資源在伺服器上未找到。</li>
+<li>500: Internal Server Error，表示伺服器在處理請求時遇到了內部錯誤。</li>
+</ul>
+<p><span>GBK是中國的一種字符集編碼，常用於簡體中文的文字處理</span></p>
+<p>以下是一些常用的字符集（編碼）：</p>
+<ol>
+<li>
+<p>UTF-8：這是一種廣泛使用的字符集，能夠表示世界上大部分語言的字符，包括英文字母、數字、拉丁字母、亞洲字符等。</p>
+</li>
+<li>
+<p>ASCII：這是一種最基本的字符集，僅包含英文字母、數字和一些常用的符號，它是許多其他字符集的基礎。</p>
+</li>
+<li>
+<p>ISO-8859-1（也稱為Latin-1）：這是一種字符集，能夠表示拉丁字母系統中的大部分字符，包括英文字母、西班牙語、法語、德語等。</p>
+</li>
+<li>
+<p>GB2312：這是中國的一種字符集，能夠表示簡體中文的字符。</p>
+</li>
+<li>
+<p>GBK：這是中國的一種字符集擴展，包含GB2312字符集的字符，並添加了更多的字符，也能夠表示簡體中文。</p>
+</li>
+<li>
+<p>Big5：這是台灣的一種字符集，能夠表示繁體中文的字符。</p>
+</li>
+<li>
+<p>Shift-JIS：這是日本的一種字符集，能夠表示日文的字符</p>
+</li>
+</ol>
+<p><span> <code>html.parser'</code><span> 是BeautifulSoup庫所使用的解析器，它能夠解析HTML文檔並構建相應的樹狀結構，方便後續對網頁內容進行操作和提取。</span></span></p>
+<p>BeautifulSoup庫提供了不同的解析器（parser）來解析HTML或XML文檔。以下是BeautifulSoup庫中常用的解析器：</p>
+<ol>
+<li>
+<p>'html.parser'：這是Python內置的HTML解析器，速度適中且不需要額外安裝其他庫。它可以解析網頁中的HTML標籤，並構建相應的樹狀結構。</p>
+</li>
+<li>
+<p>'lxml'：這是一個基於C語言的庫，提供了快速且強大的HTML和XML解析功能。在安裝BeautifulSoup時需要單獨安裝lxml庫，可以透過pip工具進行安裝。</p>
+</li>
+<li>
+<p>'html5lib'：這是一個純Python實現的HTML解析器，它的解析速度較慢，但在處理複雜的HTML文檔時更穩定且準確。</p>
+</li>
+</ol>
+<p>這些解析器都有其優點和適用場景。通常，如果你需要解析複雜的HTML文檔，特別是在處理不完整或不符合標準的HTML時，建議使用'lxml'或'html5lib'解析器。而如果你僅需要基本的HTML解析功能，'html.parser'是一個輕量級和方便的選擇。</p>
+<h3>提取資料</h3>
+<pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">from bs4 import BeautifulSoup
+import requests
+url = "https://41023125.github.io/learning-process/content/index.html"
+response = requests.get(url)
+soup = BeautifulSoup(response.coent.decode('UTF-8'), 'html.parser')
+span_tags = soup.find_all(['a'])
+print(span_tags)
+</pre>
+<p>延續前篇加入span_tags = soup.find_all(['a'])</p>
+<p><code>find_all</code><span> 是 BeautifulSoup 中的一個方法，它用於尋找符合指定條件的所有元素。在這個例子中，條件是 </span><code>['a']</code><span>，表示尋找所有的 </span><code>&lt;a&gt;</code><span> 標籤元素。</span></p>
+<p>除了 <code>find_all</code> 方法之外，BeautifulSoup 還提供了其他常用的方法來解析和操縱網頁的內容。以下是一些常見的 BeautifulSoup 方法：</p>
+<ol>
+<li><code>find(tag, attrs, recursive, text, **kwargs)</code>：尋找符合條件的第一個元素，與 <code>find_all</code> 類似，但只返回第一個匹配的結果。</li>
+<li><code>find_next(tag, attrs, recursive, text, **kwargs)</code>：尋找下一個符合條件的元素。</li>
+<li><code>find_all_next(tag, attrs, recursive, text, **kwargs)</code>：尋找之後所有符合條件的元素。</li>
+<li><code>find_previous(tag, attrs, recursive, text, **kwargs)</code>：尋找前一個符合條件的元素。</li>
+<li><code>find_all_previous(tag, attrs, recursive, text, **kwargs)</code>：尋找之前所有符合條件的元素。</li>
+<li><code>select(selector)</code>：使用 CSS 選擇器選擇元素。</li>
+<li><code>get_text()</code>：獲取元素的內容文本。</li>
+<li><code>get(tag, default)</code>：獲取元素的屬性值。</li>
+<li><code>has_attr(name)</code>：檢查元素是否具有指定的屬性。</li>
+<li><code>prettify()</code>：以縮進和換行的方式返回美化後的 HTML 字符串。</li>
+</ol>
+<p><a>&lt;a&gt;標籤是 HTML 中的超連結元素，通常用於創建鏈接到其他網頁或文件的文字或圖片。這行程式碼的目的是從 soup 物件中找到所有的&lt;a&gt;</a><a>標籤元素。</a></p>
+<p>例如想要抓取全部&lt;a&gt;標籤下的<span>href屬性裡面的內容 </span></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">span_tags = soup.find_all('a')
+for span_tag in span_tags:
+    class_attr = span_tag.get("href")
+    if class_attr:
+        print(class_attr)</pre>
+<p>想要抓取<code>&lt;a&gt;</code><span> 標籤所顯示的文字內容</span></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">a_tags = soup.find_all('a')
+for a_tag in a_tags:
+    text_content = a_tag.get_text()
+    print(text_content)
+</pre>
+<p><span>使用 </span><code>get_text()</code><span> 方法獲取 </span><code>&lt;a&gt;</code><span> 標籤內的文字內容</span></p>
+<p><span>使用 <code>get_text()</code><span> 方法時，它會返回所有子節點的文字內容，包括嵌套的子元素。如果只想獲取直接內容，而不包括子元素的文字，可以使用 </span><code>string</code><span> 屬性，像這樣：</span><code>text_content = a_tag.string</code><span>。</span></span></p>
+<p><span><span></span></span></p><h1>other</h1>
 <p>放置其他零散物品</p>
 <h2>建立倉儲</h2>
 <p>進入github選擇new repository.png</p>

@@ -2,7 +2,7 @@
         <head>
         <title>learning-process</title>
         <meta charset="utf-8">
-<meta property="head" content="H1">
+<meta property="head" content="H2">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700,900" rel="stylesheet">
         <link rel="stylesheet" href="./../cmsimde/static/chimper/fonts/icomoon/style.css">
@@ -141,28 +141,94 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">辨識初步程式架構 << <a href='辨識初步程式架構.html'>Previous</a> <a href='列出設備上的應用程式.html'>Next</a> >> 列出設備上的應用程式<br /><h1>adb</h1>
-<p><a href="https://drive.google.com/file/d/1Jz0SCrmmJfHok8FH_F0pwIMWqxyfNwms/view?usp=share_link/"></a></p>
-<p>學習利用python控制手機與模擬器</p>
-<p><a href="https://hi-upchen.medium.com/%E5%A6%82%E4%BD%95%E5%9C%A8-win10-%E5%AE%89%E8%A3%9D-android-adb%E5%B7%A5%E5%85%B7-8546cb0b81ce">如何在 WIN10 安裝 Android ADB工具</a></p>
-<p><a href="https://hi-upchen.medium.com/%E5%A6%82%E4%BD%95%E8%AE%93-nox-%E5%A4%9C%E7%A5%9E%E6%A8%A1%E6%93%AC%E5%99%A8%E6%94%AF%E6%8F%B4-adb-3b10b2764967">如何讓 NOX 夜神模擬器支援 ADB</a></p>
-<p><a href="https://shengyu7697.github.io/android-adb/">Android adb 基本用法教學</a></p>
-<p><a href="https://www.yeshen.com/faqs/H15tDZ6YW">【新手指导】夜神安卓模拟器adb命令详解_夜神安卓模拟器新手帮助页 (yeshen.com)</a></p>
-<p><span>可以使用</span></p>
-<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">adb shell pm list packages | findstr dice
+    <div id="tipue_search_content">專案 << <a href='專案.html'>Previous</a> <a href='如何抓取html.html'>Next</a> >> 如何抓取html<br /><h1>小說爬蟲</h1>
+<p><a href="./../downloads/dist.7z">程式執行檔</a></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import requests
+from bs4 import BeautifulSoup
+import datetime
+
+file_path = 'Book.txt'  
+file_path = '書本.txt'  
+
+def print_hyperlink(text, url):
+    print(f"\033]8;;{url}\033\\{text}\033]8;;\033\\")
+
+def count_lines_in_file(file_path):
+    """
+    檢查Book資料數
+    """
+    with open(file_path, 'r',encoding='utf-8') as file:
+        for line in file:
+            url = line.strip().split()[-1]
+            #print(line.strip().split()[0])
+            if (main(url.strip())) != []:
+                # print(line.strip().split()[0])
+                print_hyperlink(line.strip().split()[0],url)
+                print(main(url.strip()))
+                
+    '''
+        for line in file:
+            '''
+
+# 獲取現在的日期
+current_date = datetime.date.today()
+# 將日期轉換為特定格式的字串
+formatted_date = current_date.strftime("%Y-%m-%d")
+
+def main(url):
+    tagall= []
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content.decode('gbk'), 'html.parser')
+
+    span_tags = soup.find_all(['a'])
+
+    for tag in span_tags:
+        if '章' in tag.text and formatted_date in tag.text:
+            #print(tag.text)
+            tagall = tag.text
+    return tagall
+count_lines_in_file(file_path)
+input("按下Enter退出...")
 </pre>
-<p><span><br/></span><span>指令來查看當前顯示的應用程式的相關資訊，其中 mCurrentFocus 顯示目前的視窗和活動的應用程式包名和類名，mFocusedApp 顯示當前焦點的應用程式包名和進程 ID。可以在模擬器或設備上執行此指令，以獲得目標應用程式的包名和主活動。</span></p>
-<p><span>假設輸出了package:com.percent.royaldice</span></p>
-<p><span>可以使用</span></p>
-<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">adb shell monkey -p com.percent.royaldice -c android.intent.category.LAUNCHER 1</pre>
-<p><span><br/><br/></span></p>
-<p><span>打開程式</span></p>
-<p>使用</p>
-<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">adb shell am force-stop com.percent.royaldice</pre>
-<p><br/><br/></p>
-<p>關閉程式</p>
-<p><span></span></p>
-<br />辨識初步程式架構 << <a href='辨識初步程式架構.html'>Previous</a> <a href='列出設備上的應用程式.html'>Next</a> >> 列出設備上的應用程式</div>
+<p>抓書籤程式</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from bs4 import BeautifulSoup
+
+def extract_h3_content_from_file(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        html_data = file.read()
+
+    soup = BeautifulSoup(html_data, 'html.parser')
+    h3_tags = soup.select('h3 &gt; a')#&gt;span
+
+    h3_contents = []
+    for h3_tag in h3_tags:
+        h3_tag2 = h3_tag.select('span')
+        if h3_tag2:
+            span_tag = h3_tag2[0]  # 获取第一个 &lt;span&gt; 标签
+            name = span_tag.text.strip()
+            h3_contents.append(name + '  ' + 'https://www.69shu.com' + h3_tag.get('href'))
+            #print(name)
+
+    return h3_contents
+
+file_path = 'mybook.txt'  # 替换为你的文件路径
+h3_contents = extract_h3_content_from_file(file_path)
+
+for content in h3_contents:
+    print(content)
+    pass
+    
+def save_to_txt(file_path, data):
+    with open(file_path, 'w', encoding='utf-8') as file:
+        for item in data:
+            file.write(item + '\n')
+
+# output_file_path = '書名.txt'  # 替换为你想要保存的文件路径
+# 
+output_file_path = '書本.txt'
+save_to_txt(output_file_path, h3_contents)
+''''''</pre>
+<p></p><br />專案 << <a href='專案.html'>Previous</a> <a href='如何抓取html.html'>Next</a> >> 如何抓取html</div>
         
     <!-- footer -->
       <div class="container">
