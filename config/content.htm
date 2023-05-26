@@ -840,11 +840,101 @@ print(f"This image belongs to class {result}.")</pre>
 <div>
 <div>
 <div><span>gameObject 遊戲對象</span></div>
+<div><span></span></div>
 </div>
 </div>
 </div>
 </div>
-</div><h1>other</h1>
+</div>
+<h1>專案</h1>
+<h2>小說更新爬蟲</h2>
+<p><a href="/downloads/dist.7z">程式執行檔</a></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import requests
+from bs4 import BeautifulSoup
+import datetime
+
+file_path = 'Book.txt'  
+file_path = '書本.txt'  
+
+def print_hyperlink(text, url):
+    print(f"\033]8;;{url}\033\\{text}\033]8;;\033\\")
+
+def count_lines_in_file(file_path):
+    """
+    檢查Book資料數
+    """
+    with open(file_path, 'r',encoding='utf-8') as file:
+        for line in file:
+            url = line.strip().split()[-1]
+            #print(line.strip().split()[0])
+            if (main(url.strip())) != []:
+                # print(line.strip().split()[0])
+                print_hyperlink(line.strip().split()[0],url)
+                print(main(url.strip()))
+                
+    '''
+        for line in file:
+            '''
+
+# 獲取現在的日期
+current_date = datetime.date.today()
+# 將日期轉換為特定格式的字串
+formatted_date = current_date.strftime("%Y-%m-%d")
+
+def main(url):
+    tagall= []
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content.decode('gbk'), 'html.parser')
+
+    span_tags = soup.find_all(['a'])
+
+    for tag in span_tags:
+        if '章' in tag.text and formatted_date in tag.text:
+            #print(tag.text)
+            tagall = tag.text
+    return tagall
+count_lines_in_file(file_path)
+input("按下Enter退出...")
+</pre>
+<p>抓書籤程式</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from bs4 import BeautifulSoup
+
+def extract_h3_content_from_file(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        html_data = file.read()
+
+    soup = BeautifulSoup(html_data, 'html.parser')
+    h3_tags = soup.select('h3 &gt; a')#&gt;span
+
+    h3_contents = []
+    for h3_tag in h3_tags:
+        h3_tag2 = h3_tag.select('span')
+        if h3_tag2:
+            span_tag = h3_tag2[0]  # 获取第一个 &lt;span&gt; 标签
+            name = span_tag.text.strip()
+            h3_contents.append(name + '  ' + 'https://www.69shu.com' + h3_tag.get('href'))
+            #print(name)
+
+    return h3_contents
+
+file_path = 'mybook.txt'  # 替换为你的文件路径
+h3_contents = extract_h3_content_from_file(file_path)
+
+for content in h3_contents:
+    print(content)
+    pass
+    
+def save_to_txt(file_path, data):
+    with open(file_path, 'w', encoding='utf-8') as file:
+        for item in data:
+            file.write(item + '\n')
+
+# output_file_path = '書名.txt'  # 替换为你想要保存的文件路径
+# 
+output_file_path = '書本.txt'
+save_to_txt(output_file_path, h3_contents)
+''''''</pre>
+<p></p><h1>other</h1>
 <p>放置其他零散物品</p>
 <h2>建立倉儲</h2>
 <p>進入github選擇new repository.png</p>
