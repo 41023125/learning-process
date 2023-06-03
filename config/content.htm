@@ -139,7 +139,8 @@ cv2.imshow("Cropped Image", image1)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 </pre>
-<p></p><h1>adb</h1>
+<p></p>
+<h1>adb</h1>
 <p><a href="https://drive.google.com/file/d/1Jz0SCrmmJfHok8FH_F0pwIMWqxyfNwms/view?usp=share_link/"></a></p>
 <p>學習利用python控制手機與模擬器</p>
 <p><a href="https://hi-upchen.medium.com/%E5%A6%82%E4%BD%95%E5%9C%A8-win10-%E5%AE%89%E8%A3%9D-android-adb%E5%B7%A5%E5%85%B7-8546cb0b81ce">如何在 WIN10 安裝 Android ADB工具</a></p>
@@ -305,7 +306,52 @@ app.mainloop()
 </pre>
 <p></p>
 <h2>連接python</h2>
-<p><img alt="" src="/images/tel2023/提問"/><img alt="" height="319" src="/images/tel2023/提問.png" width="467"/></p><h1>RD</h1>
+<p><img alt="" src="/images/tel2023/提問"/><img alt="" height="319" src="/images/tel2023/提問.png" width="467"/></p>
+<h1>Unity</h1>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/nPW6tKeapsM" title="YouTube video player" width="560"></iframe></p>
+<div>
+<div>
+<div>
+<div><span>void</span><span> </span><span>Start</span><span>(){}//開始時只執行一次</span></div>
+<div>
+<div>
+<div><span>void</span><span> </span><span>Update</span><span>()</span><span>{}//重複執行</span></div>
+</div>
+</div>
+</div>
+</div>
+<div><span>Debug.Log(123); //將括號內容顯示在consoleg上面</span></div>
+<div><span>public //公用</span></div>
+<div>
+<div><span>[</span><span>SerializeField</span><span>]</span></div>
+<div><span>rigidbody 剛體</span></div>
+<div><span>collider 碰撞</span></div>
+<div><span></span></div>
+<div></div>
+<div>
+<div><span>private</span><span> </span><span>void</span><span> </span><span>OnCollisionEnter2D</span><span>(</span><span>Collision2D</span><span> </span><span>other</span><span>) </span></div>
+<div><span>    {</span></div>
+<div><span><span>       </span></span>
+<div>
+<div><span>        if</span><span>(</span><span>other</span><span>.</span><span>gameObject</span><span>.</span><span>tag</span><span> </span><span>==</span><span> </span><span>"food"</span><span>)</span></div>
+<div><span>        {</span></div>
+<div><span>            </span><span>Debug</span><span>.</span><span>Log</span><span>(</span><span>"撞到了"</span><span>);</span></div>
+<div><span>        }</span></div>
+</div>
+</div>
+<div><span>    }//碰撞檢測</span></div>
+<div></div>
+<div>
+<div>
+<div><span>gameObject 遊戲對象</span></div>
+<div><span></span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<h1>專案</h1>
+<h2>RD</h2>
 <p><a href="https://play.google.com/store/apps/details?id=com.percent.royaldice">RD</a></p>
 <p>4/6開始執行方案</p>
 <p>目標做成自動排版RD版面的python程式</p>
@@ -313,7 +359,7 @@ app.mainloop()
 <p>自動判斷並移動</p>
 <p>使用<a href="https://41023125.github.io/learning-process/content/adb.html">abd</a>進行操控並獲取畫面</p>
 <p>使用<a href="https://41023125.github.io/learning-process/content/OpenCV.html">OpenCV</a>辨識處理</p>
-<h2>檢查版面上的骰子</h2>
+<h3>檢查版面上的骰子</h3>
 <p>預設值</p>
 <p>addx 195</p>
 <p>addy 1010 #訓練場1090</p>
@@ -523,7 +569,7 @@ ass = check_all(image)
 '''</pre>
 </div>
 </div>
-<p><strong></strong></p><h2>檢查造骰按鈕狀態</h2>
+<p><strong></strong></p><h3>檢查造骰按鈕狀態</h3>
 <p>預設值</p>
 <p>addx 195</p>
 <p>addy 1010</p>
@@ -605,8 +651,7 @@ image = cv2.imread(JPG1)
 print(pushbutton(image))
 </pre>
 </div>
-</div>
-<h2>測試框選範圍</h2>
+</div><h3>測試框選範圍</h3>
 <div>
 <div>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false"># pylint: disable=no-member
@@ -640,8 +685,7 @@ image = cv2.imread(JPG1)
 look(pag(image))
 </pre>
 </div>
-</div>
-<h2>辨識改成多線程</h2>
+</div><h3>辨識改成多線程</h3>
 <div>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">from concurrent import futures
 import cv2
@@ -682,8 +726,7 @@ ass = check_all(image)
 ''''''</pre>
 </div>
 <p>速度差距</p>
-<p><img alt="" height="196" src="/images/rd/多線程.png" width="266"/></p>
-<h2>svm</h2>
+<p><img alt="" height="196" src="/images/rd/多線程.png" width="266"/></p><h3>svm</h3>
 <p>速度過慢</p>
 <div>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import cv2
@@ -721,8 +764,7 @@ data = img.flatten()  # 將圖像數據展平為一維數組
 
 # 預測圖像
 prediction = clf.predict([data])</pre>
-</div>
-<h2>LeNet-5</h2>
+</div><h3>LeNet-5</h3>
 <div>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import cv2
 import numpy as np
@@ -802,52 +844,7 @@ model = train_model()
 # 預測圖像
 result = predict_image("C:/initpython/ph/jpg/2.png", model)
 print(f"This image belongs to class {result}.")</pre>
-</div>
-<h1>Unity</h1>
-<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/nPW6tKeapsM" title="YouTube video player" width="560"></iframe></p>
-<div>
-<div>
-<div>
-<div><span>void</span><span> </span><span>Start</span><span>(){}//開始時只執行一次</span></div>
-<div>
-<div>
-<div><span>void</span><span> </span><span>Update</span><span>()</span><span>{}//重複執行</span></div>
-</div>
-</div>
-</div>
-</div>
-<div><span>Debug.Log(123); //將括號內容顯示在consoleg上面</span></div>
-<div><span>public //公用</span></div>
-<div>
-<div><span>[</span><span>SerializeField</span><span>]</span></div>
-<div><span>rigidbody 剛體</span></div>
-<div><span>collider 碰撞</span></div>
-<div><span></span></div>
-<div></div>
-<div>
-<div><span>private</span><span> </span><span>void</span><span> </span><span>OnCollisionEnter2D</span><span>(</span><span>Collision2D</span><span> </span><span>other</span><span>) </span></div>
-<div><span>    {</span></div>
-<div><span><span>       </span></span>
-<div>
-<div><span>        if</span><span>(</span><span>other</span><span>.</span><span>gameObject</span><span>.</span><span>tag</span><span> </span><span>==</span><span> </span><span>"food"</span><span>)</span></div>
-<div><span>        {</span></div>
-<div><span>            </span><span>Debug</span><span>.</span><span>Log</span><span>(</span><span>"撞到了"</span><span>);</span></div>
-<div><span>        }</span></div>
-</div>
-</div>
-<div><span>    }//碰撞檢測</span></div>
-<div></div>
-<div>
-<div>
-<div><span>gameObject 遊戲對象</span></div>
-<div><span></span></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<h1>專案</h1>
-<h2>小說爬蟲</h2>
+</div><h2>小說爬蟲</h2>
 <p><a href="/downloads/dist.7z">程式執行檔</a></p>
 <pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">import requests
 from bs4 import BeautifulSoup
@@ -934,7 +931,7 @@ def save_to_txt(file_path, data):
 output_file_path = '書本.txt'
 save_to_txt(output_file_path, h3_contents)
 ''''''</pre>
-<p></p><h3>如何抓取html</h3>
+<h3>如何抓取html</h3>
 <div>
 <div><span></span></div>
 <div>
@@ -1033,9 +1030,15 @@ for a_tag in a_tags:
 </pre>
 <p><span>使用 </span><code>get_text()</code><span> 方法獲取 </span><code>&lt;a&gt;</code><span> 標籤內的文字內容</span></p>
 <p><span>使用 <code>get_text()</code><span> 方法時，它會返回所有子節點的文字內容，包括嵌套的子元素。如果只想獲取直接內容，而不包括子元素的文字，可以使用 </span><code>string</code><span> 屬性，像這樣：</span><code>text_content = a_tag.string</code><span>。</span></span></p>
-<p><span><span></span></span></p><h1>other</h1>
-<p>放置其他零散物品</p>
-<h2>建立倉儲</h2>
+<p><br/><br/><br/><br/></p><h2>課表轉換器</h2>
+<p><img alt="" height="189" src="/images/原課表時間.png" width="88"/></p>
+<p>原本的選課結果無法直觀的理解</p>
+<p>故希望能轉換成表格型式</p>
+<p><a href="/downloads/課表轉換器.7z">課表轉換器.7z</a></p>
+<p>由於驗證碼系統無法利用爬蟲爬取資料</p>
+<p>故使用手動將選課結果的html複製於 課表.html 檔案中</p>
+<p>經由啟動main.exe 會轉換成 課表.xlsx</p><h1>other</h1>
+<p>放置其他零散物品</p><h2>建立倉儲</h2>
 <p>進入github選擇new repository.png</p>
 <p><img alt="" height="167" src="/images/建立倉儲/new repository.png" width="278"/></p>
 <p>填寫要建立的倉儲名稱</p>
@@ -1064,7 +1067,8 @@ for a_tag in a_tags:
 <p><img alt="" height="47" src="/images/key.py/key.png" width="422"/></p>
 <p></p>
 <h2>CMD</h2>
-<p>遠端連線 mstsc<br/>檢查sfc /scannow <br/>chkdsk <br/>chkdsk /r<br/>外部curl -L ip.tool.lu<br/>ping 127.0.0.1 -t<br/>性能監測器perfmon.msc<br/>使用者帳戶net user</p><h1>question</h1>
+<p>遠端連線 mstsc<br/>檢查sfc /scannow <br/>chkdsk <br/>chkdsk /r<br/>外部curl -L ip.tool.lu<br/>ping 127.0.0.1 -t<br/>性能監測器perfmon.msc<br/>使用者帳戶net user</p>
+<h1>question</h1>
 <p>所遇到的問題與解決方法</p>
 <p><br/>上傳檔案太大<img alt="" height="186" src="/images/遇到問題/檔案太大.png" width="1315"/></p>
 <h2>上傳檔案太大</h2>
@@ -1083,7 +1087,8 @@ for a_tag in a_tags:
 <h2>恢復之前版本</h2>
 <p><a href="https://blog.csdn.net/yxlshk/article/details/79944535">Git恢复之前版本的两种方法reset、revert（图文详解）</a></p>
 <pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">git reset --hard 目標版本號</pre>
-<p><br/><br/></p><h2>強制push</h2>
+<p><br/><br/></p>
+<h2>強制push</h2>
 <p><a href="https://www.delftstack.com/zh-tw/howto/git/git-push-force/">Git 推送強制更改</a></p>
 <pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">git push origin main --force</pre>
 <pre class="language-git" tabindex="0"><br/><br/></pre>
