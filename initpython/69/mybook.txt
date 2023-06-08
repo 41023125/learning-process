@@ -1,0 +1,1448 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="gbk">
+<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>个人书架-69书吧</title>
+<link rel="stylesheet" type="text/css" href="https://cdn.shucdn.com/css/style.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.shucdn.com/css/iconfont/iconfont.css">
+<link rel="shortcut icon" href="https://cdn.shucdn.com/favicon.ico"/>
+<script src="https://cdn.shucdn.com/js/jquery.min.js"></script>
+<script src="https://cdn.shucdn.com/js/main.js?v=20214"></script>
+<script src="https://cdn.shucdn.com/js/ad.js"></script>
+<link href="https://cdn.shucdn.com/images/m_ios72.png" rel="apple-touch-icon" />
+<link href="https://cdn.shucdn.com/images/m_ios114.png" rel="apple-touch-icon" sizes="114x114" />
+<script type="text/javascript">
+function check_confirm(){
+	var checkform = document.getElementById('checkform');
+	var checknum = 0;
+	for (var i=0; i < checkform.elements.length; i++){
+	 if (checkform.elements[i].name == 'checkid[]' && checkform.elements[i].checked == true) checknum++; 
+	}
+	if(checknum == 0){
+		alert('请先选择要操作的书目！');
+		return false;
+	}
+	var newclassid = document.getElementById('newclassid');
+	if(newclassid.value == -1){
+		if(confirm('确实要将选中书目移出书架么？')) return true;
+		else return false;
+	}else{
+		return true;
+	}
+}
+//删除
+var cur_bookid=0;
+function act_delete(bookid){
+	var o = getTarget();
+	cur_bookid=bookid;
+	if(confirm('确实要将本书移出书架么？')) 
+	 {
+	        var token= "0ce6347a956263e38d5e56a34f1de653";
+	        $.post({
+             contenttype:'application/x-www-form-urlencoded; charset=UTF-8',
+              data:{act:'delete',bid:bookid,jieqi_token:token},
+             url: "/modules/article/bookcase.php?bid="+bookid,
+              datatype: "html",
+             success: function(data){
+			    //			console.log('DATA:'+data);
+			      $('#book_'+cur_bookid).remove();
+				  alert('删除成功!');
+				 // window.location.reload(); 
+             }
+	        });
+	}
+	return false;
+}
+</script>
+</head>
+<body>
+        <div class="leftmenu">
+        <div class="menu_close_btn" onclick="hidemenu()"><i class="iconfont icon-close" onclick="hidemenu()"></i></div>
+        <div class="headuser">
+        <div class="headimg"><img class="user_touxiang" src="" alt=""/></div>
+        <span><script type=text/javascript>uname()</script></span>
+        </div>
+        <div class="register">
+            <script type=text/javascript>login2()</script>
+        </div>
+        <div class="menu2">
+            <ul>
+                <li><a href="https://www.69shu.com"><i class="iconfont icon-home"></i>首页</a></li>
+                <li><a href="/top"><i class="iconfont icon-chart"></i>排行榜</a></li>
+                <li><a href="/wanben"><i class="iconfont icon-ai-book"></i>完本小说</a></li>
+                <li><a href="/top/0.htm"><i class="iconfont icon-list1"></i>小说分类</a></li>
+                <li><a href="/modules/article/bookcase.php"><i class="iconfont icon-library"></i>我的书架</a></li>
+                <li><a href="/jilu/"><i class="iconfont icon-yuedujilu"></i>阅读记录</a></li>
+                <li><a href="/newmessage.php?tosys=1&title=%B7%B4%C0%A1"><i class="iconfont icon-chat"></i>意见反馈</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="modbg" onclick="hidemenu()"></div>
+    <header>
+        <div class="headbox clearfix">
+            <div class="menubtn pull-left" onclick="showmenu()"><i class="iconfont icon-menu"></i></div>
+            <div class="logo pull-left">
+                <div class="logoimg"></div>
+                <a href="https://www.69shu.com">69书吧</a>
+            </div>
+            <form action="/modules/article/search.php" method="post">
+            <div class="search pull-left">
+                
+                <i class="iconfont icon-search"></i>
+                <div class="inputbox">
+                    <i class="iconfont icon-ArrowLeft"></i>
+                    <input type="text" onblur="if(this.value==''){this.value=this.defaultValue}" onfocus="if(this.value==this.defaultValue){this.value=''}" value="请输入搜索内容！" name="searchkey"/>
+                    <input type="hidden" name="searchtype"  value="all" />
+                </div>
+            </div> </form>
+            <div class="user1 pull-right" onclick="showmenu()"><img class="user_touxiang" src="" alt=""/></div>
+            <div class="lang pull-right">
+                <a href="javascript:;" class="textsel">简体</a>
+                <ul>
+                    <li><a href="javascript:zh_tran('s');" class="zh_click" id="zh_click_s">简体</a> </li>
+                    <li><a href="javascript:zh_tran('t');" class="zh_click" id="zh_click_t">繁體</a></li>
+                </ul>
+            </div>
+            <div class="menu1 pull-right">
+                <ul>
+                    <li><a href="https://www.69shu.com"> 首页</a></li>
+                    <li><a href="/top"><i class="iconfont icon-chart"></i> 排行</a></li>
+                    <li><a href="/wanben"><i class="iconfont icon-ai-book"></i> 完本</a></li>
+                    <li><a href="/top/0.htm"><i class="iconfont icon-list1"></i> 分类</a></li>
+                    <li><a href="/modules/article/bookcase.php"><i class="iconfont icon-library"></i> 我的书架</a></li>
+                    <li><a href="/jilu/"><i class="iconfont icon-yuedujilu"></i> 阅读记录</a></li>
+
+                </ul>
+            </div>
+        </div>
+    </header>
+    
+    
+    
+    
+    
+
+    <!--头部内容结束-->
+    <div class="container">
+        <ul class="row">
+            <li class="col-8">
+                <div class="mybox">
+                    <div>
+                        <ul class="tabs tabs2 clearfix">
+                            <li class="active"> <a href="/modules/article/bookcase.php">我的书架</a></li>
+                            <li class=""> <a href="/jilu/">阅读记录</a></li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <form action="https://www.69shu.com/modules/article/bookcase.php" method="post" name="checkform" id="checkform" onsubmit="return check_confirm();">
+                        <div class="tabsnav">
+                            <div class=" newbox newbox2">
+                                <ul>
+                                    
+                                    <li id="book_1531547">
+                                        <a href="/txt/46973.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/46/46973/46973s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/46973.htm"><span>妖女住手</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>荣小荣</label>
+                                                <label>修真武侠</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1531547&aid=46973&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1531547&aid=46973&cid=32442928">第134章 告上昆仑</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-25</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1531547&aid=46973&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1531547" href="javascript:;" onclick="act_delete(1531547);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1140968">
+                                        <a href="/txt/48007.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/48/48007/48007s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/48007.htm"><label>更新</label><span>我的姐夫是太子</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>上山打老虎额</label>
+                                                <label>官场职场</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1140968&aid=48007&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1140968&aid=48007&cid=32442473">第529章 搜刮殆尽</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-25</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1140968&aid=48007&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1140968" href="javascript:;" onclick="act_delete(1140968);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1545205">
+                                        <a href="/txt/44433.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/44/44433/44433s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/44433.htm"><label>更新</label><span>重生的我只想专心学习</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>纯纯的橙</label>
+                                                <label>都市小说</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1545205&aid=44433&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1545205&aid=44433&cid=32442250">第412章 易川的高中【56K】</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-25</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1545205&aid=44433&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1545205" href="javascript:;" onclick="act_delete(1545205);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1405700">
+                                        <a href="/txt/48012.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/48/48012/48012s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/48012.htm"><label>更新</label><span>长生法师</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>意应平</label>
+                                                <label>玄幻魔法</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405700&aid=48012&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405700&aid=48012&cid=32442199">第279章 276：【欲望之主】</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-25</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405700&aid=48012&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1405700" href="javascript:;" onclick="act_delete(1405700);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1406575">
+                                        <a href="/txt/48041.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/48/48041/48041s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/48041.htm"><label>更新</label><span>这游戏也太真实了</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>晨星LL</label>
+                                                <label>官场职场</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406575&aid=48041&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406575&aid=48041&cid=32442179">第764章 百越公司上市！</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-25</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406575&aid=48041&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1406575" href="javascript:;" onclick="act_delete(1406575);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1405683">
+                                        <a href="/txt/46527.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/46/46527/46527s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/46527.htm"><label>更新</label><span>乱世书</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>姬叉</label>
+                                                <label>玄幻魔法</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405683&aid=46527&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405683&aid=46527&cid=32441616">第322章 盗贼游戏</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-25</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405683&aid=46527&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1405683" href="javascript:;" onclick="act_delete(1405683);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1097833">
+                                        <a href="/txt/45083.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/45/45083/45083s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/45083.htm"><label>更新</label><span>期待在异世界</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>如倾如诉</label>
+                                                <label>官场职场</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1097833&aid=45083&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1097833&aid=45083&cid=32441479">第598章 黎格的新侍从</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-25</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1097833&aid=45083&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1097833" href="javascript:;" onclick="act_delete(1097833);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_988747">
+                                        <a href="/txt/47994.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/47/47994/47994s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/47994.htm"><label>更新</label><span>灵境行者</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>卖报小郎君</label>
+                                                <label>科幻空间</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=988747&aid=47994&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=988747&aid=47994&cid=32441440">第693章 傅青阳和元始天尊的八卦</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-25</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=988747&aid=47994&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_988747" href="javascript:;" onclick="act_delete(988747);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1405856">
+                                        <a href="/txt/45673.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/45/45673/45673s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/45673.htm"><label>更新</label><span>重生后才发现我有青梅</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>曹瞒君</label>
+                                                <label>官场职场</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405856&aid=45673&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405856&aid=45673&cid=32438158">第374章 既然两个人都可以</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-25</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405856&aid=45673&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1405856" href="javascript:;" onclick="act_delete(1405856);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1405785">
+                                        <a href="/txt/48052.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/48/48052/48052s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/48052.htm"><label>更新</label><span>高天之上</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>阴天神隐</label>
+                                                <label>玄幻魔法</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405785&aid=48052&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405785&aid=48052&cid=32437939">第928章 乐土乡与妖精打架 （6300，求月票！）</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-25</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405785&aid=48052&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1405785" href="javascript:;" onclick="act_delete(1405785);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_974957">
+                                        <a href="/txt/37184.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/37/37184/37184s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/37184.htm"><label>更新</label><span>术师手册</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>听日</label>
+                                                <label>官场职场</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=974957&aid=37184&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=974957&aid=37184&cid=32437715">第1352章 完美的奇迹（三更）</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-25</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=974957&aid=37184&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_974957" href="javascript:;" onclick="act_delete(974957);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1139888">
+                                        <a href="/txt/45541.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/45/45541/45541s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/45541.htm"><label>更新</label><span>太受玩家欢迎该怎么办</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>绯色回响</label>
+                                                <label>官场职场</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1139888&aid=45541&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1139888&aid=45541&cid=32437127">第325章 向阳花死于黎明之前</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-25</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1139888&aid=45541&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1139888" href="javascript:;" onclick="act_delete(1139888);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1405669">
+                                        <a href="/txt/40821.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/40/40821/40821s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/40821.htm"><label>更新</label><span>秘术纪元</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>正北方</label>
+                                                <label>游戏竞技</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405669&aid=40821&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405669&aid=40821&cid=32437069">第542章 四方会面</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-25</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405669&aid=40821&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1405669" href="javascript:;" onclick="act_delete(1405669);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1405574">
+                                        <a href="/txt/46544.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/46/46544/46544s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/46544.htm"><label>更新</label><span>不是吧君子也防</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>阳小戎</label>
+                                                <label>官场职场</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405574&aid=46544&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405574&aid=46544&cid=32436897">第184章 履盟之人</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-25</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405574&aid=46544&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1405574" href="javascript:;" onclick="act_delete(1405574);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1405709">
+                                        <a href="/txt/46310.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/46/46310/46310s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/46310.htm"><span>我只想好好当个反派</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>插秧小能手</label>
+                                                <label>都市小说</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405709&aid=46310&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405709&aid=46310&cid=32436869">第224章 以身补天，涅槃重生！</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-25</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405709&aid=46310&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1405709" href="javascript:;" onclick="act_delete(1405709);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1406808">
+                                        <a href="/txt/46957.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/46/46957/46957s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/46957.htm"><label>更新</label><span>谁让他修仙的！</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>最白的乌鸦</label>
+                                                <label>修真武侠</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406808&aid=46957&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406808&aid=46957&cid=32436643">第164章 你们问道宗欺人太甚！</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-25</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406808&aid=46957&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1406808" href="javascript:;" onclick="act_delete(1406808);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1406705">
+                                        <a href="/txt/44460.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/44/44460/44460s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/44460.htm"><label>更新</label><span>重生之逆流十年</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>蜜汁姬</label>
+                                                <label>官场职场</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406705&aid=44460&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406705&aid=44460&cid=32436629">第401章 徐坚的三观瞬间崩塌</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-25</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406705&aid=44460&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1406705" href="javascript:;" onclick="act_delete(1406705);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1405692">
+                                        <a href="/txt/44201.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/44/44201/44201s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/44201.htm"><label>更新</label><span>重生之我绝不当舔狗</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>猫戏狗</label>
+                                                <label>都市小说</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405692&aid=44201&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405692&aid=44201&cid=32436589">第643章 小米，我的刁蛮小公主！（小8k求订阅！）</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-25</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405692&aid=44201&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1405692" href="javascript:;" onclick="act_delete(1405692);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1405677">
+                                        <a href="/txt/45165.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/45/45165/45165s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/45165.htm"><label>更新</label><span>女侠且慢</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>关关公子</label>
+                                                <label>玄幻魔法</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405677&aid=45165&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405677&aid=45165&cid=32436318">第333章 恶人先告状！</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-25</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405677&aid=45165&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1405677" href="javascript:;" onclick="act_delete(1405677);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1168201">
+                                        <a href="/txt/45705.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/45/45705/45705s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/45705.htm"><label>更新</label><span>我的青梅，她逐渐膨胀了</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>蜂蜜加冰</label>
+                                                <label>都市小说</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1168201&aid=45705&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1168201&aid=45705&cid=32423817">第383章 这样的日子也挺好</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-22</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1168201&aid=45705&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1168201" href="javascript:;" onclick="act_delete(1168201);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1405623">
+                                        <a href="/txt/44822.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/44/44822/44822s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/44822.htm"><label>更新</label><span>我从低武世界开始化龙</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>山中浮云</label>
+                                                <label>科幻空间</label>
+                                                <label>全本</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405623&aid=44822&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405623&aid=44822&cid=32327740">完结感言</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-17</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405623&aid=44822&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1405623" href="javascript:;" onclick="act_delete(1405623);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1433022">
+                                        <a href="/txt/48058.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/48/48058/48058s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/48058.htm"><span>轮回乐园</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>那一只蚊子</label>
+                                                <label>科幻空间</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1433022&aid=48058&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1433022&aid=48058&cid=32162475">延期</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-15</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1433022&aid=48058&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1433022" href="javascript:;" onclick="act_delete(1433022);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1405942">
+                                        <a href="/txt/46287.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/46/46287/46287s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/46287.htm"><label>更新</label><span>我被青梅女仆培养成恋爱大师</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>枭鸮</label>
+                                                <label>官场职场</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405942&aid=46287&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405942&aid=46287&cid=32277405">第405章 尾声四·能遇到你真好</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-08</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405942&aid=46287&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1405942" href="javascript:;" onclick="act_delete(1405942);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1162045">
+                                        <a href="/txt/45563.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/45/45563/45563s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/45563.htm"><span>二周目，她们对我恶意满满</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>白色暴击</label>
+                                                <label>官场职场</label>
+                                                <label>全本</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1162045&aid=45563&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1162045&aid=45563&cid=32266561">第352章 番外：灰烬协会</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-06</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1162045&aid=45563&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1162045" href="javascript:;" onclick="act_delete(1162045);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_973457">
+                                        <a href="/txt/48111.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/48/48111/48111s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/48111.htm"><span>不科学御兽</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>轻泉流响</label>
+                                                <label>玄幻魔法</label>
+                                                <label>全本</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=973457&aid=48111&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=973457&aid=48111&cid=0">完本感言</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-06</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=973457&aid=48111&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_973457" href="javascript:;" onclick="act_delete(973457);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1406171">
+                                        <a href="/txt/46730.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/46/46730/46730s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/46730.htm"><label>更新</label><span>全民逃荒，我的物品能合成</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>男人不潇洒</label>
+                                                <label>科幻空间</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406171&aid=46730&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406171&aid=46730&cid=0">第282章 灯塔（大结局）</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-02</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406171&aid=46730&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1406171" href="javascript:;" onclick="act_delete(1406171);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_996404">
+                                        <a href="/txt/31791.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/31/31791/31791s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/31791.htm"><span>我真不是大佬</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>快餐店</label>
+                                                <label>玄幻魔法</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=996404&aid=31791&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=996404&aid=31791&cid=0">新书发布</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-05-01</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=996404&aid=31791&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_996404" href="javascript:;" onclick="act_delete(996404);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_967685">
+                                        <a href="/txt/39260.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/39/39260/39260s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/39260.htm"><span>无上神途</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>男人不潇洒</label>
+                                                <label>玄幻魔法</label>
+                                                <label>全本</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=967685&aid=39260&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=967685&aid=39260&cid=31788309">新书《我是牧场主》已经发布</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2023-04-06</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=967685&aid=39260&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_967685" href="javascript:;" onclick="act_delete(967685);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1406629">
+                                        <a href="/txt/38533.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/38/38533/38533s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/38533.htm"><span>这个路人过于冷静</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>空荡荡的书架</label>
+                                                <label>都市小说</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406629&aid=38533&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406629&aid=38533&cid=30726971">第394章 393.别哭，我带你出去玩</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2022-11-20</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406629&aid=38533&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1406629" href="javascript:;" onclick="act_delete(1406629);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_967682">
+                                        <a href="/txt/48039.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/48/48039/48039s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/48039.htm"><span>夜的命名术</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>会说话的肘子</label>
+                                                <label>都市小说</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=967682&aid=48039&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=967682&aid=48039&cid=30630132">10.28修改进度</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2022-10-29</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=967682&aid=48039&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_967682" href="javascript:;" onclick="act_delete(967682);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1024673">
+                                        <a href="/txt/38965.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/38/38965/38965s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/38965.htm"><span>我将炮灰NPC养成传奇魔女</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>白色暴击</label>
+                                                <label>游戏竞技</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1024673&aid=38965&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1024673&aid=38965&cid=30257157">休息一个月后的新书</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2022-10-18</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1024673&aid=38965&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1024673" href="javascript:;" onclick="act_delete(1024673);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1007062">
+                                        <a href="/txt/38495.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/38/38495/38495s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/38495.htm"><span>作为反派的我抓了女主角，尚好？</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>太宰乱</label>
+                                                <label>玄幻魔法</label>
+                                                <label>全本</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1007062&aid=38495&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1007062&aid=38495&cid=30090183">完结感言：狗作者的话</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2022-09-13</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1007062&aid=38495&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1007062" href="javascript:;" onclick="act_delete(1007062);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1059401">
+                                        <a href="/txt/39629.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/39/39629/39629s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/39629.htm"><span>谁还不是个修行者了</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>金色茉莉花</label>
+                                                <label>官场职场</label>
+                                                <label>全本</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1059401&aid=39629&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1059401&aid=39629&cid=30082071">全订番外已发——</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2022-09-11</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1059401&aid=39629&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1059401" href="javascript:;" onclick="act_delete(1059401);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_967683">
+                                        <a href="/txt/39180.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/39/39180/39180s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/39180.htm"><span>公子别秀</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>荣小荣</label>
+                                                <label>玄幻魔法</label>
+                                                <label>全本</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=967683&aid=39180&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=967683&aid=39180&cid=29404151">第454章 回归</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2022-09-10</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=967683&aid=39180&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_967683" href="javascript:;" onclick="act_delete(967683);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_967628">
+                                        <a href="/txt/38940.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/38/38940/38940s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/38940.htm"><span>星界使徒</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>齐佩甲</label>
+                                                <label>游戏竞技</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=967628&aid=38940&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=967628&aid=38940&cid=29654963">抱歉，长休养一阵</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2022-09-10</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=967628&aid=38940&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_967628" href="javascript:;" onclick="act_delete(967628);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1072238">
+                                        <a href="/txt/36719.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/36/36719/36719s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/36719.htm"><label>更新</label><span>重生之似水流年</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>苍山月</label>
+                                                <label>都市小说</label>
+                                                <label>全本</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1072238&aid=36719&cid=25867973">第112章 考个第二不过分吧？</a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1072238&aid=36719&cid=30050019">第640章 番外：三大法则</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2022-09-10</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1072238&aid=36719&cid=25867973">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1072238" href="javascript:;" onclick="act_delete(1072238);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_967684">
+                                        <a href="/txt/39055.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/39/39055/39055s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/39055.htm"><span>我明明只想当龙套</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>如倾如诉</label>
+                                                <label>官场职场</label>
+                                                <label>全本</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=967684&aid=39055&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=967684&aid=39055&cid=30013291">新书：《期待在异世界》</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2022-08-22</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=967684&aid=39055&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_967684" href="javascript:;" onclick="act_delete(967684);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1001356">
+                                        <a href="/txt/39656.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/39/39656/39656s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/39656.htm"><span>凶猛领主</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>公子不思</label>
+                                                <label>游戏竞技</label>
+                                                <label>全本</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1001356&aid=39656&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1001356&aid=39656&cid=29800258">明天白天更新</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2022-08-06</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1001356&aid=39656&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1001356" href="javascript:;" onclick="act_delete(1001356);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_982270">
+                                        <a href="/txt/30454.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/30/30454/30454s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/30454.htm"><span>怪物被杀就会死</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>阴天神隐</label>
+                                                <label></label>
+                                                <label>全本</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=982270&aid=30454&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=982270&aid=30454&cid=29793758">燃钢之魂的漫画在腾讯动漫上线啦！</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2022-07-30</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=982270&aid=30454&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_982270" href="javascript:;" onclick="act_delete(982270);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1098133">
+                                        <a href="/txt/36825.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/36/36825/36825s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/36825.htm"><span>柴刀流恋爱日常</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>神奇柠檬茶</label>
+                                                <label>官场职场</label>
+                                                <label>全本</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1098133&aid=36825&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1098133&aid=36825&cid=28558254">新书《师兄给你开个光》已发布！！</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2022-07-30</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1098133&aid=36825&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1098133" href="javascript:;" onclick="act_delete(1098133);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1405959">
+                                        <a href="/txt/42121.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/42/42121/42121s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/42121.htm"><span>恋上青梅这件事</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>转角吻猪</label>
+                                                <label>都市小说</label>
+                                                <label>全本</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405959&aid=42121&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405959&aid=42121&cid=29781451">完结啦~撒花~</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2022-07-30</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1405959&aid=42121&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1405959" href="javascript:;" onclick="act_delete(1405959);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_984047">
+                                        <a href="/txt/29622.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/29/29622/29622s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/29622.htm"><span>黎明之剑</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>远瞳</label>
+                                                <label>科幻空间</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=984047&aid=29622&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=984047&aid=29622&cid=29418277">1601.新书上线！</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2022-07-10</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=984047&aid=29622&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_984047" href="javascript:;" onclick="act_delete(984047);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1406207">
+                                        <a href="/txt/40140.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/40/40140/40140s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/40140.htm"><span>我是一条龙</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>柳岸花又明</label>
+                                                <label>修真武侠</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406207&aid=40140&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406207&aid=40140&cid=29206569">第104章 一碗水端平</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2022-06-20</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406207&aid=40140&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1406207" href="javascript:;" onclick="act_delete(1406207);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1406896">
+                                        <a href="/txt/28480.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/28/28480/28480s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/28480.htm"><span>大王饶命</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>会说话的肘子</label>
+                                                <label>游戏竞技</label>
+                                                <label>全本</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406896&aid=28480&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406896&aid=28480&cid=26591392">4月18日新书，《夜的命名术》！</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2022-03-31</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406896&aid=28480&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1406896" href="javascript:;" onclick="act_delete(1406896);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1406197">
+                                        <a href="/txt/30186.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/30/30186/30186s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/30186.htm"><span>我真没想重生啊</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>柳岸花又明</label>
+                                                <label>都市小说</label>
+                                                <label>全本</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406197&aid=30186&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406197&aid=30186&cid=27571815">1106.新书今天上架，大家去贡献个首订吧。</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2022-02-25</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1406197&aid=30186&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1406197" href="javascript:;" onclick="act_delete(1406197);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_971808">
+                                        <a href="/txt/31477.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/31/31477/31477s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/31477.htm"><span>大奉打更人</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>卖报小郎君</label>
+                                                <label>修真武侠</label>
+                                                <label>全本</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=971808&aid=31477&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=971808&aid=31477&cid=27172921">954.《大奉打更人之诸天万界》数字藏品预约开始啦！</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2022-01-05</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=971808&aid=31477&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_971808" href="javascript:;" onclick="act_delete(971808);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_990812">
+                                        <a href="/txt/28238.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/28/28238/28238s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/28238.htm"><span>超神机械师</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>齐佩甲</label>
+                                                <label>游戏竞技</label>
+                                                <label>全本</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=990812&aid=28238&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=990812&aid=28238&cid=26889744">1484.新书《星界使徒》发布！</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2021-10-24</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=990812&aid=28238&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_990812" href="javascript:;" onclick="act_delete(990812);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1178148">
+                                        <a href="/txt/32129.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/32/32129/32129s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/32129.htm"><span>世子很凶</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>关关公子</label>
+                                                <label>历史军事</label>
+                                                <label>全本</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1178148&aid=32129&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1178148&aid=32129&cid=26889154">906.番外：风雨同舟</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2021-07-01</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1178148&aid=32129&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1178148" href="javascript:;" onclick="act_delete(1178148);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1041957">
+                                        <a href="/txt/32670.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/32/32670/32670s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/32670.htm"><span>重生的我不需要女主</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>螺旋飞面</label>
+                                                <label>同人小说</label>
+                                                <label>全本</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1041957&aid=32670&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1041957&aid=32670&cid=24305006">第469章 番外三·小伙伴都惊呆了</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2020-10-11</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1041957&aid=32670&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1041957" href="javascript:;" onclick="act_delete(1041957);">删除</a>
+                                        </div>
+                                    </li>
+ 
+                                    <li id="book_1015509">
+                                        <a href="/txt/5213.htm" class="imgbox">
+                                            <img src="https://cdn.shucdn.com/files/article/image/5/5213/5213s.jpg">
+                                        </a>
+                                        <div class="newnav ">
+                                            <h3><a href="/txt/5213.htm"><span>我的女友是丧尸</span></a></h3>
+                                            <div class="labelbox">
+                                                <label>黑暗荔枝</label>
+                                                <label>科幻空间</label>
+                                                <label>连载</label>
+                                            </div>
+                                            <div class="zxzj">
+                                                <p>书签：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1015509&aid=5213&cid=0"></a></p>
+                                                <p>更新：<a href="https://www.69shu.com/modules/article/readbookcase.php?bid=1015509&aid=5213&cid=11458172">完本感言</a></p>
+                                            </div>
+                                        </div>
+                                        <div class="newright">
+                                            <span>2015-07-01</span>
+                                            <a class="btn btn-tp" href="https://www.69shu.com/modules/article/readbookcase.php?bid=1015509&aid=5213&cid=0">继续阅读</a>
+                                            <a class="btn btn-jrsj" id="act_delete_1015509" href="javascript:;" onclick="act_delete(1015509);">删除</a>
+                                        </div>
+                                    </li>
+  
+                                </ul>
+                            </div>
+                    </div>
+                    </form>
+                    </div>
+
+    </div>
+    </li>
+    <li class="col-4">
+        <div class="mybox">
+            <div class="">
+                <h3 class="mytitle">推荐小说</h3>
+                <div class="ranking">
+                    <ul>
+<li>
+                            <a href="https://www.69shu.com/txt/42054.htm">
+                                <div class="rank_left">
+                                    <h3 class="ranktit ellipsis_1"><span></span>将军，夫人喊你种田了</h3>
+                                </div>
+                                <div class="rank_right">
+                                    <span>连载</span>
+                                </div>
+                            </a>
+                        </li><li>
+                            <a href="https://www.69shu.com/txt/40892.htm">
+                                <div class="rank_left">
+                                    <h3 class="ranktit ellipsis_1"><span></span>重生年代：炮灰长姐带妹逆袭</h3>
+                                </div>
+                                <div class="rank_right">
+                                    <span>连载</span>
+                                </div>
+                            </a>
+                        </li><li>
+                            <a href="https://www.69shu.com/txt/44871.htm">
+                                <div class="rank_left">
+                                    <h3 class="ranktit ellipsis_1"><span></span>寒门大俗人</h3>
+                                </div>
+                                <div class="rank_right">
+                                    <span>连载</span>
+                                </div>
+                            </a>
+                        </li><li>
+                            <a href="https://www.69shu.com/txt/46957.htm">
+                                <div class="rank_left">
+                                    <h3 class="ranktit ellipsis_1"><span></span>谁让他修仙的！</h3>
+                                </div>
+                                <div class="rank_right">
+                                    <span>连载</span>
+                                </div>
+                            </a>
+                        </li><li>
+                            <a href="https://www.69shu.com/txt/45426.htm">
+                                <div class="rank_left">
+                                    <h3 class="ranktit ellipsis_1"><span></span>千金有福</h3>
+                                </div>
+                                <div class="rank_right">
+                                    <span>连载</span>
+                                </div>
+                            </a>
+                        </li><li>
+                            <a href="https://www.69shu.com/txt/40265.htm">
+                                <div class="rank_left">
+                                    <h3 class="ranktit ellipsis_1"><span></span>被夺一切后她封神回归</h3>
+                                </div>
+                                <div class="rank_right">
+                                    <span>连载</span>
+                                </div>
+                            </a>
+                        </li><li>
+                            <a href="https://www.69shu.com/txt/44405.htm">
+                                <div class="rank_left">
+                                    <h3 class="ranktit ellipsis_1"><span></span>修炼从简化功法开始</h3>
+                                </div>
+                                <div class="rank_right">
+                                    <span>连载</span>
+                                </div>
+                            </a>
+                        </li><li>
+                            <a href="https://www.69shu.com/txt/43616.htm">
+                                <div class="rank_left">
+                                    <h3 class="ranktit ellipsis_1"><span></span>万相之王</h3>
+                                </div>
+                                <div class="rank_right">
+                                    <span>连载</span>
+                                </div>
+                            </a>
+                        </li><li>
+                            <a href="https://www.69shu.com/txt/46960.htm">
+                                <div class="rank_left">
+                                    <h3 class="ranktit ellipsis_1"><span></span>兼职艺术家</h3>
+                                </div>
+                                <div class="rank_right">
+                                    <span>连载</span>
+                                </div>
+                            </a>
+                        </li><li>
+                            <a href="https://www.69shu.com/txt/46868.htm">
+                                <div class="rank_left">
+                                    <h3 class="ranktit ellipsis_1"><span></span>苟在妖武乱世修仙</h3>
+                                </div>
+                                <div class="rank_right">
+                                    <span>连载</span>
+                                </div>
+                            </a>
+                        </li><li>
+                            <a href="https://www.69shu.com/txt/1464.htm">
+                                <div class="rank_left">
+                                    <h3 class="ranktit ellipsis_1"><span></span>校花的贴身高手</h3>
+                                </div>
+                                <div class="rank_right">
+                                    <span>连载</span>
+                                </div>
+                            </a>
+                        </li><li>
+                            <a href="https://www.69shu.com/txt/45800.htm">
+                                <div class="rank_left">
+                                    <h3 class="ranktit ellipsis_1"><span></span>大小姐她总是不求上进</h3>
+                                </div>
+                                <div class="rank_right">
+                                    <span>连载</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <a class="btn more-btn" href="/top">查看更多</a>
+                </div>
+            </div>
+        </div>
+    </li>
+    </ul>
+    </div>
+    <div class="foot">
+        <div class="copyright">
+            <div>
+                <a href="/top">排行榜</a>
+                <a href="/update">最新更新</a>
+                <a href="/all.php">全部小说</a>
+            </div>
+            <p>Copyright  2021 <a href="https://www.69shu.com/">69书吧</a><a href="https://www.69shu.com/">www.69shu.com</a></p>
+        </div>
+    </div>
+    <div class="modelbg"></div>
+    <script src="https://cdn.shucdn.com/js/chinese.js"></script>
+    <script>tongji();</script>
+    <script>
+        $(document).ready(function () {
+            if ($(window).width() < 900) {
+                $(".btn-jrsj").html("<i class='iconfont icon-close'></i>")
+            }
+        })
+    </script>
+</body>
+
+</html>

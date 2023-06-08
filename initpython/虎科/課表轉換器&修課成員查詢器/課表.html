@@ -1,0 +1,483 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>國立虎尾科技大學-校務行政e化資訊平台~*eCare*~</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <!-- Bootstrap-select-1.13.9 -->
+  <link rel="stylesheet" href="/css/bootstrap-select.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/css/font-awesome-4.7.0.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/dist/css/AdminLTE.min.css?d=20230607">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css?d=20230607">
+  <!-- Date Picker -->
+  <link rel="stylesheet" href="/plugins/datepicker/datepicker3.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="/plugins/daterangepicker/daterangepicker.css">
+    <link href="/css/jquery-ui-1.13.2.min.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/jquery.ui.timepicker.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/jquery.autocomplete.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="/css/general.css?d=20230607" media="screen" rel="stylesheet" type="text/css" >  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <!--[if lt IE 9]>
+  <script src="Hello World"></script>
+  <![endif]-->
+  <!-- jQuery -->
+  <script src="/js/jquery-3.6.1.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="/js/bootstrap.min.js"></script>
+  <!-- Bootstrap-select-1.13.9 -->
+  <script src="/js/bootstrap-select.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js" integrity="sha512-42PE0rd+wZ2hNXftlM78BSehIGzezNeQuzihiBCvUEB3CVxHvsShF86wBWwQORNxNINlBPuq7rG4WWhNiTVHFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/zh-tw.min.js" integrity="sha512-2n88JfMhTbm2TPaHV4U5A1vgTX9317dzZ3AWG6Q1YDb5d7/fTOAquQr4Iaprl7wW84EYqpoofQLKIYhqTz4eLQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>  
+  <!-- daterangepicker -->
+  <script src="/plugins/daterangepicker/daterangepicker.js"></script>
+  <!-- datepicker -->
+  <script src="/plugins/datepicker/bootstrap-datepicker.js"></script>
+  <!-- Modernizr: the feature detection library for HTML5/CSS3 -->
+  <script src="/plugins/modernizr.custom.js"></script>
+  <!-- blockUI -->
+  <script src="/plugins/jquery.blockUI-new.js"></script>
+  <!-- ckeditor -->
+  <script src="https://cdn.ckeditor.com/4.20.1/basic/ckeditor.js"></script>
+
+  <script src="/js/sweetalert2.all.min.js"></script>
+  <!-- jQuery UI -->
+  <script src="/js/jquery-ui-1.13.2.min.js"></script>
+  <script src="/js/datepicker-zh-TW.js"></script>
+  <script src="/plugins/jquery.sessionTimeout.min.js"></script>
+  <script src="/plugins/jquery.ui.timepicker.js"></script>
+  <script src="/js/jquery.csv.min.js"></script>
+  <script src="/plugins/jslibrary.js"></script>
+  <!-- tableExport -->
+  <script src="/plugins/Tbl2Xls.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/dist/js/app.js"></script>
+  <script>
+  //dialog共用設定
+  var dialOpt={
+          autoOpen: false,
+          width: 'auto',
+          resize: false,
+          modal: true,
+          show: 'fold'
+  };
+
+  $(function(){
+        var pageUnloaded = function(e)
+    {
+      if(confirm("確定要登出？"))
+          location.href="/login/authout?out=1&sid=6mtdolf0o24ku0o9070eh7n2m1";
+    };
+    $(".bt_logout").click(pageUnloaded);
+    
+    // Resolve conflict in jQuery UI tooltip with Bootstrap tooltip
+    $.widget.bridge('uibutton', $.ui.button);
+
+    $.timepicker.regional['zh-TW'] = {
+      hourText: '時',
+      minuteText: '分',
+      amPmText: ['早', '晚'] ,
+      closeButtonText: '關閉',
+      nowButtonText: '現在',
+      deselectButtonText: '取消' }
+    $.timepicker.setDefaults($.timepicker.regional['zh-TW']);
+
+        $.sessionTimeout({
+      message:"您的登入即將逾時！",
+      keepAliveUrl:"/keepalive",
+      redirUrl:"/timeout",
+      logoutUrl:"/login/authout?out=1&sid=6mtdolf0o24ku0o9070eh7n2m1",
+      warnAfter: 1380000,
+      redirAfter: 1420000
+    });
+      });
+
+</script>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <header class="main-header noprint">
+    <!-- Logo -->
+    <a href="/desktop" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>eCare</b></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>NFU</b>-校務eCare</span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+          </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar noprint">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu">
+                <li class="header">登入資訊</li>
+        <li><a href="#" class="bt_logout"><i class="fa fa-circle-o text-red"></i> <span>登出&nbsp;[李○淵(學生)]</span></a></li>
+        </li>
+                <li class="header">主選單</li>
+
+        
+        
+                            
+          <li class="treeview ">
+            <a href="#">
+              <i class="fa fa-info"></i> <span>個人資訊及設定</span>
+                            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                          </a>
+                        <ul class="treeview-menu">
+                                          <li><a href="/desktop/parentchk"><i class="fa fa-circle-o"></i> 家長查詢設定</a></li>
+                                          <li><a href="/desktop/abseqry"><i class="fa fa-circle-o"></i> 學生曠缺暨請假查詢</a></li>
+                                          <li><a href="/pay"><i class="fa fa-circle-o"></i> 歷年繳費資料查詢</a></li>
+                                          <li><a href="/desktop/vpnapply"><i class="fa fa-circle-o"></i> SSL-VPN連線申請</a></li>
+                                          <li><a href="/desktop/mymentor"><i class="fa fa-circle-o"></i> 我的導師</a></li>
+                                          <li><a href="/desktop/clsspositqry"><i class="fa fa-circle-o"></i> 班級幹部名單</a></li>
+                          </ul>
+                      </li>
+                            
+          <li class="treeview ">
+            <a href="#">
+              <i class="fa fa-th"></i> <span>行政服務</span>
+                            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                          </a>
+                        <ul class="treeview-menu">
+                                          <li><a href="/desktop/iactapply"><i class="fa fa-circle-o"></i> 活動報名(iAct)發佈申請</a></li>
+                          </ul>
+                      </li>
+                            
+          <li class="treeview  active">
+            <a href="#">
+              <i class="fa fa-book"></i> <span>課程服務</span>
+                            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                          </a>
+                        <ul class="treeview-menu">
+                                          <li><a href="/aaiss/cgeqry"><i class="fa fa-circle-o"></i> 通識修課現況查詢</a></li>
+                                          <li><a href="/aaiqry"><i class="fa fa-circle-o"></i> 暑修意願調查</a></li>
+                                          <li class="active"><a href="/aaiqry/chooseconfirm"><i class="fa fa-circle-o"></i> 選課結果查詢</a></li>
+                                          <li><a href="/aaiqry/studscore"><i class="fa fa-circle-o"></i> 成績查詢</a></li>
+                                          <li><a href="/aaiss/studtimetable"><i class="fa fa-circle-o"></i> 學生功課表查詢</a></li>
+                                          <li><a href="/aaiqry/sports"><i class="fa fa-circle-o"></i> 體育興趣選項調查</a></li>
+                                          <li><a href="/aaiqry/coursecorrect"><i class="fa fa-circle-o"></i> 線上簽核選課申請系統</a></li>
+                                          <li><a href="/aaiqry/coursedelete"><i class="fa fa-circle-o"></i> 期中退選登錄</a></li>
+                                          <li><a href="https://credit.nfu.edu.tw/"><i class="fa fa-circle-o"></i> 抵免系統</a></li>
+                                          <li><a href="/aaiqry/learnscert"><i class="fa fa-circle-o"></i> 學程修讀及證書申請</a></li>
+                          </ul>
+                      </li>
+                            
+          <li class="treeview ">
+            <a href="#">
+              <i class="fa fa-edit"></i> <span>線上填報及申請</span>
+                            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                          </a>
+                        <ul class="treeview-menu">
+                                          <li><a href="/desktop/menqs"><i class="fa fa-circle-o"></i> 導師輔導評量</a></li>
+                                          <li><a href="https://qsurvey.nfu.edu.tw/survey"><i class="fa fa-circle-o"></i> 評量系統</a></li>
+                                          <li><a href="/aaiss/parreg"><i class="fa fa-circle-o"></i> 研究所論文題目登錄</a></li>
+                                          <li><a href="/desktop/studmail"><i class="fa fa-circle-o"></i> 常用聯絡信箱設定</a></li>
+                                          <li><a href="/desktop/notify"><i class="fa fa-circle-o"></i> Line Notify通知綁定</a></li>
+                                          <li><a href="/desktop/askforleave"><i class="fa fa-circle-o"></i> 學生個人請假</a></li>
+                                          <li><a href="/desktop/officeleave"><i class="fa fa-circle-o"></i> 學生公假申請</a></li>
+                                          <li><a href="/desktop/reportcovid"><i class="fa fa-circle-o"></i> COVID-19線上自主填報</a></li>
+                                          <li><a href="/desktop/stdqs"><i class="fa fa-circle-o"></i> 心情檢測</a></li>
+                                          <li><a href="/desktop/mysessnote"><i class="fa fa-circle-o"></i> 班會紀錄</a></li>
+                                          <li><a href="/desktop/mysupapp"><i class="fa fa-circle-o"></i> 弱勢助學計畫助學金申請</a></li>
+                                          <li><a href="/desktop/myexemption"><i class="fa fa-circle-o"></i> 學雜費減免申請</a></li>
+                                          <li><a href="/desktop/dormapp"><i class="fa fa-circle-o"></i> 住宿申請</a></li>
+                                          <li><a href="/desktop/stayrepair"><i class="fa fa-circle-o"></i> 學生宿舍區修繕登記</a></li>
+                          </ul>
+                      </li>
+                            
+          <li class="treeview ">
+            <a href="#">
+              <i class="fa fa-graduation-cap"></i> <span>畢業學分檢核</span>
+                            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                          </a>
+                        <ul class="treeview-menu">
+                                          <li><a href="/grachk/index"><i class="fa fa-circle-o"></i> 畢業結果查詢</a></li>
+                          </ul>
+                      </li>
+                            
+          <li class="treeview ">
+            <a href="#">
+              <i class="fa fa-pie-chart"></i> <span>表單及公告查詢</span>
+                            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                          </a>
+                        <ul class="treeview-menu">
+                                          <li><a href="/aaiss/grachk"><i class="fa fa-circle-o"></i> 離校審核查詢</a></li>
+                                          <li><a href="/stdqry/delayloan"><i class="fa fa-circle-o"></i> 延畢生就學貸款申請書列印</a></li>
+                                          <li><a href="/desktop/myschaqry"><i class="fa fa-circle-o"></i> 獎助學金公告</a></li>
+                                          <li><a href="/desktop/myhelpqry"><i class="fa fa-circle-o"></i> 學雜費減免及弱勢助學公告</a></li>
+                                          <li><a href="/desktop/studentloan"><i class="fa fa-circle-o"></i> 就學貸款進度查詢</a></li>
+                          </ul>
+                      </li>
+                            
+          <li class="treeview ">
+            <a href="#">
+              <i class="fa fa-folder"></i> <span>學習歷程檔案</span>
+                            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                          </a>
+                        <ul class="treeview-menu">
+                                          <li><a href="/stuep/license"><i class="fa fa-circle-o"></i> 專業知能-證照資料</a></li>
+                                          <li><a href="/stuep/competition"><i class="fa fa-circle-o"></i> 專業知能-競賽經驗</a></li>
+                                          <li><a href="/stuep/course"><i class="fa fa-circle-o"></i> 專業知能-課程地圖修課歷程</a></li>
+                                          <li><a href="/stuep/practice"><i class="fa fa-circle-o"></i> 專業知能-校外實習</a></li>
+                                          <li><a href="/stuep/softcourse"><i class="fa fa-circle-o"></i> 專業知能-適性學習彈性課程</a></li>
+                                          <li><a href="/stuep/prjrec"><i class="fa fa-circle-o"></i> 專業知能-畢業專題紀錄</a></li>
+                                          <li><a href="/stuep/ucancommon"><i class="fa fa-circle-o"></i> 專業知能-UCAN共通職能施測成果</a></li>
+                                          <li><a href="/stuep/ucanprof"><i class="fa fa-circle-o"></i> 專業知能-UCAN專業職能結果</a></li>
+                                          <li><a href="/stuep/ucanint"><i class="fa fa-circle-o"></i> 專業知能-UCAN興趣探索結果</a></li>
+                                          <li><a href="/stuep/rdct"><i class="fa fa-circle-o"></i> 全人教育-獎懲紀錄</a></li>
+                                          <li><a href="/stuep/partime"><i class="fa fa-circle-o"></i> 全人教育-工讀紀錄</a></li>
+                                          <li><a href="/stuep/class"><i class="fa fa-circle-o"></i> 全人教育-班級幹部紀錄</a></li>
+                                          <li><a href="/stuep/gmoney"><i class="fa fa-circle-o"></i> 全人教育-獎學金紀錄</a></li>
+                                          <li><a href="/stuep/club"><i class="fa fa-circle-o"></i> 全人教育-社團幹部紀錄</a></li>
+                                          <li><a href="/stuep/service"><i class="fa fa-circle-o"></i> 全人教育-服務學習紀錄</a></li>
+                                          <li><a href="/stuep/paper"><i class="fa fa-circle-o"></i> 電子履歷產生器</a></li>
+                                          <li><a href="/desktop/ssotoucan"><i class="fa fa-circle-o"></i> 前往UCAN</a></li>
+                          </ul>
+                      </li>
+                            
+          <li class="treeview ">
+            <a href="/desktop/logrec">
+              <i class="fa fa-list"></i> <span>個人登入紀錄</span>
+                          </a>
+                      </li>
+                            
+          <li class="treeview ">
+            <a href="/desktop">
+              <i class="fa fa-home"></i> <span>回主頁</span>
+                          </a>
+                      </li>
+        
+                <!--<li>
+          <a href="pages/calendar.html">
+            <i class="fa fa-calendar"></i> <span>校園行事曆</span>
+          </a>
+        </li>
+        <li><a href="documentation/index.html"><i class="fa fa-book"></i> <span>操作說明</span></a></li>-->
+              </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+
+      <!-- Content Header (Page header) -->
+      <section class="content-header noprint">
+        <h1>
+          選課結果查詢          <small>[功能代碼：AIS008]</small>
+        </h1>
+        <ol class="breadcrumb">
+          <li><a href="/desktop"><i class="fa fa-dashboard"></i> 主頁</a></li>
+          <li class="active">選課結果查詢</li>
+        </ol>
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+      <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      
+<script type="text/javascript">
+$(function(){
+	$("button").button();
+	$("#bt_print").click(function(e){
+		e.preventDefault();
+		print($(".content-wrapper").html());
+        });
+
+});
+
+</script>
+<style type="text/css"> 
+<!--
+#cge_uncount{
+	color:#A5B4B4;
+}
+#cge_count{
+	color:#000000;
+}
+#cge_nodata{
+	color:#F00F00;
+}
+@media print {
+  a[href]:after {
+    content: none !important;
+  }
+}
+-->
+
+</style>
+<div style="clear:both;">
+	<!--<p class="noprint"><font size=5>[<a href="/aaiqry/chooseconfirm">選課查詢</a>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<a href="/aaiqry/chooseconfirm?kind=2">暑修選課查詢</a></font>]</p>-->
+	<!--<ul>
+		<li><a href="#div_cge">暑修意願調查</a></li>
+		
+		<li><a href="#div_coll">系(所)院</a></li>
+		<li><a href="#div_ltc">語言中心</a></li>
+		<li><a href="#div_life">生輔組</a></li>
+		<li><a href="#div_stact">課指組</a></li>
+		<li><a href="#div_cash">出納組</a></li>
+		<li><a href="#div_lib">圖書館</a></li>
+		<li><a href="#div_smate">校友就業組</a></li>
+		
+	</ul>-->
+		<div id="div_cge" class="tab_content">
+<p class='noprint'><font size=5>[<a href='/aaiqry/chooseconfirm'>112學年度第1學期選課查詢</a>]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<a href='/aaiqry/chooseconfirm?kind=2'>暑修選課查詢</a>]</font></p><button id='bt_print' class='noprint' style='font-weight:bold;'>列印本頁</button><table class='tbcls' style='margin:10px;' border='1'>
+
+	<tr><td colspan='10'>
+	<center> <h3> 國立虎尾科技大學112學年度第1學期 學生選課公告 </h3> </CENTER>
+	<br>
+	<center>  日間部&nbsp;&nbsp; 班級Class:四設計二甲&nbsp;&nbsp; 學號Student ID:41023125&nbsp;&nbsp; 姓名Name:李學淵  </CENTER>
+	</td></tr>
+				 
+
+	<tr>
+		<th width=1%>順序<br>NO</th>
+		<th width=4%>當期課號<br>Course Code</th>
+		<th width=7%>修課班級<br>Class</th>
+		<th width=10%>科目名稱<br>Subject Name</th>
+		<th width=3%>選別<br>Selection</th>
+		<th width=3%>學分<br>Credit</th>
+		<th width=3%>時數<br>Hour</th>
+		<th width=5%>授課老師<br>Teacher</th>
+		<th width=10%>教室<br>Classroom</th>
+		<th width=10%>上課星期/節次(*表衝堂)<br>ClassWeek/Period(*Indicating Class Conflict)</th>
+	</tr>
+	<tr><td>1</td><td>0726</td><td>四技三進階英文</td><td>進階英文(一) 設計甲班<br>Advanced English Reading(1)</td><td  bgcolor=#A6DEFF>必修</td><td>  2.0</td><td>2</td><td>廖秀芬</td><td>AIA0103 (電腦語言教室_資訊大樓 )</td><td>二/3 二/4 </td></tr>
+<tr><td>2</td><td>0859</td><td>四設計三甲</td><td>實務專題(一)<br>Practical Project(1)</td><td  bgcolor=#A6DEFF>必修</td><td>  2.0</td><td>3</td><td>周榮源</td><td>OAA0102 (虛擬教室_線上上課 )</td><td>四/13 四/14 四/15 </td></tr>
+<tr><td>3</td><td>0860</td><td>四設計三甲</td><td>機電整合實驗<br>Mechatronic Lab.</td><td  bgcolor=#A6DEFF>必修</td><td>  1.0</td><td>3</td><td>林明宗</td><td>BGA0911 (機電實驗室_綜合工程一館 )</td><td>四/5 四/6 四/7 </td></tr>
+<tr><td>4</td><td>0861</td><td>四設計三甲</td><td>機構學<br>Mechanism</td><td  bgcolor=#A6DEFF>必修</td><td>  3.0</td><td>3</td><td>王威立</td><td>BGA0710 (研討室(二)_綜合工程一館 )</td><td>一/7 一/8 三/5 </td></tr>
+<tr><td>5</td><td>0862</td><td>四設計三甲</td><td>流體力學<br>Fluid Mechanics</td><td  bgcolor=#A6DEFF>必修</td><td>  3.0</td><td>3</td><td>陳建信</td><td>BGA0730 (研討室(一)_綜合工程一館 )</td><td>一/5 一/6 五/2 </td></tr>
+<tr><td>6</td><td>0863</td><td>四設計三甲</td><td>機械元件設計(一)<br>Design of Machine Elements(1)</td><td  bgcolor=#A6DEFF>必修</td><td>  3.0</td><td>3</td><td>黃社振</td><td>BGA0730 (研討室(一)_綜合工程一館 )</td><td>二/1 三/2 三/3 </td></tr>
+<tr><td>7</td><td>0622</td><td>四技軍訓</td><td>全民國防教育軍事訓練(五)國防科技<br>All-out Defense Education Military Training--Defense Technology</td><td  bgcolor=#BEFEC7>選修</td><td>  1.0</td><td>2</td><td>江秉榮</td><td>ATB0301 (普通教室_第二期教學大樓 )</td><td>一/1 一/2 </td></tr>
+<tr><td>8</td><td>0626</td><td>四技軍訓</td><td>全民國防教育軍事訓練(二)國防政策<br>All-out Defense Education Military Training--National Defense Policies</td><td  bgcolor=#BEFEC7>選修</td><td>  1.0</td><td>2</td><td>林耀淞</td><td>ATB0503 (普通教室_第二期教學大樓 )</td><td>二/7 二/8 </td></tr>
+<tr><td>9</td><td>0628</td><td>四技軍訓</td><td>全民國防教育軍事訓練(三)全民國防<br>All-out Defense Education Military Training—Civil Defense</td><td  bgcolor=#BEFEC7>選修</td><td>  1.0</td><td>2</td><td>林岳毅</td><td>ATB0201 (普通教室_第二期教學大樓 )</td><td>五/3 五/4 </td></tr>
+<tr><td>10</td><td>2136</td><td>四財金三甲</td><td>稅務會計<br>Tax Accounting</td><td  bgcolor=#BEFEC7>選修</td><td>  3.0</td><td>3</td><td>張杏端</td><td>CHB0102 (普通教室一_人文大樓 )</td><td>五/5 五/6 五/7 </td></tr>
+<tr><td>11</td><td>0529</td><td>通識</td><td>安全衛生概論<br>Safety and Health Introduction</td><td  bgcolor=#ff00ff>通識</td><td>  2.0</td><td>2</td><td>張益銘</td><td>ATA0303 (普通教室_一期大樓 )</td><td>一/3 一/4 </td></tr>
+<tr><td colspan='10'><table width=100%><tr><td><center>列表總學分數:<br>List of total credits:</td><td>22 </td><td><br>扣除  寒暑期校外實習課程學分數:<br>Deduction of credits for off-campus internship courses during winter and summer vacations:</td><td>0</td><td>＝ 總學分數:<br> ＝Total credits:</td><td>22</td><td>總學時數:<br>Total hours:</td><td>28<br><font color=red></b></font></td></tr></table></td></tr><tr><td colspan='10'><TABLE broder=0 width=100%><tr><td>注意事項:<br>
+一、如有任何問題請洽以下單位：<br>
+<font color=blue>
+      通識課程：05-6315181<br>
+      語言中心開課課程：05-6315831<br>
+      體育課程：05-6315282<br>
+      管理學院各系之會計學(一)及經濟學(一)：05-6315703<br>
+ 
+ </font>	
+      日間部：05-6315111~5114；yst@nfu.edu.tw<br>
+      進修推廣部：05-6315071~5073；ywsc@nfu.edu.tw<br>
+      碩士在職專班及進修學院：05-6315088~5089 ; soyoung@nfu.edu.tw<br>
+      產學攜手專班及產學訓專班：05-6315087;seliaw@nfu.edu.tw<br>
+
+二、<font size=4> 此篩選結果僅供查詢, 實際選課結果以正式選課紀錄所載為憑</font><br>
+三、
+<font color=red>請注意!!!衝堂科目系統已作初步篩選，若仍有衝堂科目須於加退選期間辦理科目退選，
+請同學留意課程異動公告，務必把握加退選階段將<br>
+       課程調整完善，以免影響己身權益</font>
+<br>
+<br>
+
+
+<br>列印時間：2023年06月07日17時50分46秒<br>Printing time：Jun 07,2023 17 hour 50 min 46 sec </TD></TR></table>	
+
+ 
+
+</td></tr>
+</table>
+
+<div id=savemag></div>
+	</div>
+	<!--
+	<div id="div_coll" class="tab_content">
+	開發中
+	</div>
+	
+	<div id="div_ltc" class="tab_content">
+	開發中
+	</div>
+
+	<div id="div_life" class="tab_content">
+	開發中
+	</div>
+	
+	<div id="div_stact" class="tab_content">
+	開發中
+	</div>
+
+	<div id="div_cash" class="tab_content">
+	開發中
+	</div>
+
+	<div id="div_lib" class="tab_content">
+	開發中
+	</div>
+	
+	<div id="div_smate" class="tab_content">
+	開發中
+	</div>
+	-->
+</div>
+   
+      </div>
+      </div>
+      </section>
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer noprint">
+    <div class="pull-right hidden-xs">
+      <b>Version</b> 2.0.0
+    </div>
+    <strong>Copyright &copy; 2016 <a href="https://www.nfu.edu.tw" title="學校首頁">國立虎尾科技大學</a>.</strong> All rights
+    reserved.<br>
+    ~平台維護：系統設計組~(伺服器：serv-A)
+  </footer>
+
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+<!-- 再載入造字html呈現的js檔 -->
+<script type="text/javascript" src="/js/AstarAPI.js"></script>
+<script type="text/javascript" src="/js/AstarWebFont.js"></script>
+<script type="text/javascript">EmbedAstarWED();</script>
+
+</body>
+</html>
